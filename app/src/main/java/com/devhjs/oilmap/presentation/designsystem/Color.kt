@@ -1,4 +1,4 @@
-package com.devhjs.oilmap.ui.theme
+package com.devhjs.oilmap.presentation.designsystem
 
 import androidx.compose.ui.graphics.Color
 
