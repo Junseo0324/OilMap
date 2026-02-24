@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.devhjs.oilmap.presentation.designsystem.OilMapTheme
+import com.devhjs.oilmap.presentation.main.MainScreenRoot
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,9 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OilMapTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                }
+                MainScreenRoot(modifier = Modifier.fillMaxSize())
             }
         }
     }
