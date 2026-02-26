@@ -6,12 +6,20 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.annotation.SuppressLint
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.devhjs.oilmap.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
-import kotlinx.coroutines.suspendCancellableCoroutine
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.Priority
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import kotlin.coroutines.resume
 
 class DefaultLocationTracker @Inject constructor(
     private val locationClient: FusedLocationProviderClient,
@@ -38,32 +46,55 @@ class DefaultLocationTracker @Inject constructor(
             return null
         }
 
-        return suspendCancellableCoroutine { cont ->
-            // 마지막으로 알려진 권한이 확인된 상태
-            try {
-                locationClient.lastLocation.apply {
-                    if (isComplete) {
-                        if (isSuccessful) {
-                            cont.resume(result)
-                        } else {
-                            cont.resume(null)
-                        }
-                        return@suspendCancellableCoroutine
-                    }
-                    addOnSuccessListener {
-                        cont.resume(it)
-                    }
-                    addOnFailureListener {
-                        cont.resume(null)
-                    }
-                    addOnCanceledListener {
-                        cont.cancel()
-                    }
+        return try {
+            locationClient.lastLocation.await()
+        } catch (e: SecurityException) {
+            // 권한이 없는데 호출하는 경우 방어 로직
+            null
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun getLocationUpdates(intervalMillis: Long): Flow<Location?> = callbackFlow {
+        val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
+            application,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val hasAccessCoarseLocationPermission = ContextCompat.checkSelfPermission(
+            application,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        if (!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission || !isGpsEnabled) {
+            trySend(null)
+            close()
+            return@callbackFlow
+        }
+
+        val request = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, intervalMillis).build()
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(result: LocationResult) {
+                super.onLocationResult(result)
+                result.locations.lastOrNull()?.let { location ->
+                    trySend(location)
                 }
-            } catch (e: SecurityException) {
-                // 권한이 없는데 호출하는 경우 방어 로직
-                cont.resume(null)
             }
+        }
+
+        locationClient.requestLocationUpdates(
+            request,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+
+        awaitClose {
+            locationClient.removeLocationUpdates(locationCallback)
         }
     }
 }

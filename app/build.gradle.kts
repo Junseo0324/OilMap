@@ -106,4 +106,5 @@ dependencies {
 
     // Location
     implementation(libs.play.services.location)
+    implementation(libs.kotlinx.coroutines.play.services)
 }

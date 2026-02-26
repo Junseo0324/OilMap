@@ -19,4 +19,13 @@ class MockLocationTracker @Inject constructor() : LocationTracker {
         }
         return mockLocation
     }
+
+    override fun getLocationUpdates(intervalMillis: Long): kotlinx.coroutines.flow.Flow<Location?> {
+        return kotlinx.coroutines.flow.flow {
+            while (true) {
+                emit(getCurrentLocation())
+                kotlinx.coroutines.delay(intervalMillis)
+            }
+        }
+    }
 }
