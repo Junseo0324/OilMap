@@ -103,4 +103,7 @@ dependencies {
 
     // Coordinate Conversion
     implementation(libs.proj4j)
+
+    // Location
+    implementation(libs.play.services.location)
 }
