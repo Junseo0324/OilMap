@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 interface StationRepository {
     // 특정 위치 주변 주유소 조회
     suspend fun getAroundStations(
-        x: Double,
-        y: Double,
+        katecX: Double,
+        katecY: Double,
         radius: Int,
         oilType: OilType,
         sortType: SortType
