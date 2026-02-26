@@ -31,6 +31,18 @@ android {
         buildConfigField("String", "OPINET_API_KEY", "\"$opinetApiKey\"")
     }
 
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            buildConfigField("boolean", "IS_DEV", "true")
+        }
+        create("prod") {
+            dimension = "environment"
+            buildConfigField("boolean", "IS_DEV", "false")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
