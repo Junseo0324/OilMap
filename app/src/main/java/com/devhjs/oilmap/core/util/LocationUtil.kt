@@ -13,7 +13,7 @@ object LocationUtil {
     fun wgs84ToKatec(lat: Double, lng: Double): Pair<Double, Double> {
         val crsFactory = CRSFactory()
         // WGS84 좌표계 설정
-        val wgs84 = crsFactory.createFromName("epsg:4326")
+        val wgs84 = crsFactory.createFromParameters("WGS84", "+proj=longlat +datum=WGS84 +no_defs")
         
         val katec = crsFactory.createFromParameters(
             "KATEC",

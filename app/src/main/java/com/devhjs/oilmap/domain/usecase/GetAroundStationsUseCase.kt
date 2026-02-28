@@ -55,6 +55,8 @@ class GetAroundStationsUseCase @Inject constructor(
 
             Result.Success(processedStations)
         } catch (e: Exception) {
+            android.util.Log.e("GetAroundStationsUseCase", "Error mapping coordinates or fetching API", e)
+            e.printStackTrace()
             Result.Error(DataError.Network.UNKNOWN)
         }
     }
