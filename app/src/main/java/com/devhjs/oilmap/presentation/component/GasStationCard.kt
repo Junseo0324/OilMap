@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 import com.devhjs.oilmap.presentation.home.GasStationUiModel
@@ -28,12 +29,14 @@ import com.devhjs.oilmap.presentation.home.GasStationUiModel
 
 @Composable
 fun GasStationCard(
-    station: GasStationUiModel,
+    uiModel: GasStationUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val isLowest = station.isLowestPrice
-    val borderColor = if (isLowest) AppColors.AlteulMain else AppColors.Border
+    val isLowestPrice = uiModel.isLowestPrice
+    val station = uiModel.station
+    
+    val borderColor = if (isLowestPrice) AppColors.AlteulMain else AppColors.Border
     val borderWidth = 1.dp
     
     Box(
@@ -50,7 +53,7 @@ fun GasStationCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        if (isLowest) Brush.horizontalGradient(
+                        if (isLowestPrice) Brush.horizontalGradient(
                             colors = listOf(AppColors.AlteulMain, AppColors.AlteulDark)
                         ) else Brush.horizontalGradient(
                             colors = listOf(AppColors.Background, AppColors.Background)
@@ -61,9 +64,9 @@ fun GasStationCard(
             ) {
                 // 브랜드 이름
                 Text(
-                    text = station.brand,
+                    text = station.brandCode,
                     style = AppTextStyles.listCountBold,
-                    color = if (isLowest) Color.White else AppColors.Gray800
+                    color = if (isLowestPrice) Color.White else AppColors.Gray800
                 )
                 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -75,7 +78,7 @@ fun GasStationCard(
                         .padding(horizontal = 8.dp, vertical = 2.dp)
                 ) {
                     Text(
-                        text = station.brand,
+                        text = station.brandCode,
                         style = AppTextStyles.labelSmall,
                         color = Color.White
                     )
@@ -84,7 +87,7 @@ fun GasStationCard(
                 Spacer(modifier = Modifier.weight(1f))
                 
                 // 최저가 뱃지
-                if (isLowest) {
+                if (isLowestPrice) {
                     Box(
                         modifier = Modifier
                             .background(Color.White, RoundedCornerShape(10.dp))
@@ -99,7 +102,7 @@ fun GasStationCard(
                 }
                 
                 // 영업종료
-                if (!station.isOpen) {
+                if (!uiModel.isOpen) {
                     Box(
                         modifier = Modifier
                             .background(AppColors.BadgeClosedBg, RoundedCornerShape(10.dp))
@@ -150,7 +153,7 @@ fun GasStationCard(
                         }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = station.baseTime,
+                            text = "10:00 기준",
                             style = AppTextStyles.captionMedium,
                             color = AppColors.Gray500
                         )
@@ -158,9 +161,8 @@ fun GasStationCard(
                     
                     Column(horizontalAlignment = Alignment.End) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            // 거리 아이콘 영역
                             Text(
-                                text = "${station.distance}km",
+                                text = "${String.format("%.1f", station.distance ?: 0.0)}km",
                                 style = AppTextStyles.priceDetailDisplay,
                                 color = AppColors.Gray700
                             )
@@ -175,7 +177,6 @@ fun GasStationCard(
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 
-                // Services
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
