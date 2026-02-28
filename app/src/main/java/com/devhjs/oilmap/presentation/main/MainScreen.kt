@@ -9,7 +9,7 @@ import androidx.navigation.toRoute
 import com.devhjs.oilmap.core.navigation.Route
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
 import com.devhjs.oilmap.presentation.favorite.FavoriteScreen
-import com.devhjs.oilmap.presentation.home.Homescreen
+import com.devhjs.oilmap.presentation.home.HomeScreenRoot
 import com.devhjs.oilmap.presentation.map.MapScreen
 
 @Composable
@@ -24,7 +24,7 @@ fun MainScreen(
     ) {
         // Home - List
         composable<Route.Home> {
-            Homescreen()
+            HomeScreenRoot()
         }
         // Home - Map
         composable<Route.Map> {
