@@ -22,4 +22,14 @@ object AppColors {
     val TagMaintenanceText = Color(0xFFCA3500)
     val BadgeClosedBg = Color(0xFFFB2C36)
     val BadgeBrandBgDefault = Color(0xFFFE9A00) // Default brand bg from Figma (ex: 알뜰주유소)
+
+    // 유종별 색상
+    val Gasoline = Color(0xFF2B7FFF)
+    val PremiumGasoline = Color(0xFF615FFF)
+    val Diesel = Color(0xFF00C950)
+    val Lpg = Color(0xFFAD46FF)
+
+    // 버튼 색상
+    val ActionButton = Color(0xFF00A63E)
+    val SecondaryButton = Color(0xFF364153)
 }
