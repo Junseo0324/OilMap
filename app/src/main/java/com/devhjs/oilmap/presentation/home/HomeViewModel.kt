@@ -8,10 +8,10 @@ import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.usecase.GetAroundStationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,8 +25,8 @@ class HomeViewModel @Inject constructor(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-    private val _event = Channel<HomeEvent>()
-    val event = _event.receiveAsFlow()
+    private val _event = MutableSharedFlow<HomeEvent>()
+    val event = _event.asSharedFlow()
 
     init {
         fetchStations()
@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
             }
             is HomeAction.OnStationClick -> {
                 viewModelScope.launch {
-                    _event.send(HomeEvent.NavigateToStationDetail(action.stationId))
+                    _event.emit(HomeEvent.NavigateToStationDetail(action.stationId))
                 }
             }
             is HomeAction.OnPermissionGranted -> {
