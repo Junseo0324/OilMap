@@ -88,7 +88,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             val location = locationTracker.getCurrentLocation()
-            android.util.Log.e("HomeViewModel", "fetchStations() called, location = $location")
             if (location != null) {
                 val result = getAroundStationsUseCase(
                     lat = location.latitude,
@@ -96,7 +95,6 @@ class HomeViewModel @Inject constructor(
                     oilType = oilType,
                     sortType = sortType
                 )
-                android.util.Log.e("HomeViewModel", "getAroundStationsUseCase result = $result")
                 when(result) {
                     is Result.Success -> {
                         val uiStations = result.data.mapIndexed { index, station ->
@@ -120,7 +118,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } else {
-                android.util.Log.e("HomeViewModel", "Location is null !!")
                 _state.update { it.copy(isLoading = false) }
             }
         }
