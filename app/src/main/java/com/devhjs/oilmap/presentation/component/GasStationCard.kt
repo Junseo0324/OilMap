@@ -26,6 +26,23 @@ import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 import com.devhjs.oilmap.presentation.home.GasStationUiModel
 
+/**
+ * 오피넷 브랜드 코드를 한글 브랜드명으로 변환합니다.
+ */
+private fun brandName(code: String): String = when (code) {
+    "SKE" -> "SK에너지"
+    "GSC" -> "GS칼텍스"
+    "HDO" -> "HD현대오일뱅크"
+    "SOL" -> "S-OIL"
+    "RTO" -> "자영알뜰"
+    "RTX" -> "고속도로알뜰"
+    "NHO" -> "농협알뜰"
+    "ETC" -> "기타"
+    "E1G" -> "E1"
+    "SKG" -> "SK가스"
+    else -> code
+}
+
 
 @Composable
 fun GasStationCard(
@@ -64,7 +81,7 @@ fun GasStationCard(
             ) {
                 // 브랜드 이름
                 Text(
-                    text = station.brandCode,
+                    text = brandName(station.brandCode),
                     style = AppTextStyles.listCountBold,
                     color = if (isLowestPrice) Color.White else AppColors.Gray800
                 )
@@ -161,8 +178,10 @@ fun GasStationCard(
                     
                     Column(horizontalAlignment = Alignment.End) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
+                            // 오피넷 API 거리 단위(m)를 km로 변환하여 표시
+                            val distanceKm = (station.distance ?: 0.0) / 1000.0
                             Text(
-                                text = "${String.format("%.1f", station.distance ?: 0.0)}km",
+                                text = "${String.format("%.1f", distanceKm)}km",
                                 style = AppTextStyles.priceDetailDisplay,
                                 color = AppColors.Gray700
                             )
