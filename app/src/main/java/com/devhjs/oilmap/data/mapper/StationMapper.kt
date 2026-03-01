@@ -5,6 +5,7 @@ import com.devhjs.oilmap.data.remote.dto.StationDetailDto
 import com.devhjs.oilmap.data.remote.dto.StationDto
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.Station
+import com.devhjs.oilmap.domain.model.StationDetail
 
 /**
  * API 응답(DTO)을 로컬 DB 엔티티로 변환
@@ -73,7 +74,7 @@ fun StationEntity.toDomain(oilType: OilType, distance: Double? = null): Station 
         OilType.PREMIUM_GASOLINE -> premiumGasolinePrice
         OilType.KEROSENE -> kerosenePrice
         OilType.LPG -> lpgPrice
-    } ?: 0
+    }
 
     return Station(
         id = stationId,
@@ -85,6 +86,29 @@ fun StationEntity.toDomain(oilType: OilType, distance: Double? = null): Station 
         y = y,
         address = address,
         tel = tel,
+        hasCarWash = hasCarWash,
+        hasMaintenance = hasMaintenance,
+        hasConvenienceStore = hasConvenienceStore,
+        isQualityCertified = isQualityCertified,
+        isFavorite = isFavorite
+    )
+}
+
+/**
+ * 로컬 DB 엔티티를 상세 도메인 모델로 변환 (유종별 가격 전체 포함)
+ */
+fun StationEntity.toDetailDomain(distance: Double? = null): StationDetail {
+    return StationDetail(
+        id = stationId,
+        name = name,
+        brandCode = brandCode,
+        address = address,
+        tel = tel,
+        distance = distance,
+        gasolinePrice = gasolinePrice,
+        premiumGasolinePrice = premiumGasolinePrice,
+        dieselPrice = dieselPrice,
+        lpgPrice = lpgPrice,
         hasCarWash = hasCarWash,
         hasMaintenance = hasMaintenance,
         hasConvenienceStore = hasConvenienceStore,

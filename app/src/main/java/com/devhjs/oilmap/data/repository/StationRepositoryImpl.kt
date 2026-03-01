@@ -1,12 +1,14 @@
 package com.devhjs.oilmap.data.repository
 
 import com.devhjs.oilmap.data.local.dao.StationDao
+import com.devhjs.oilmap.data.mapper.toDetailDomain
 import com.devhjs.oilmap.data.mapper.toDomain
 import com.devhjs.oilmap.data.mapper.toEntity
 import com.devhjs.oilmap.data.remote.api.OpinetService
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.model.Station
+import com.devhjs.oilmap.domain.model.StationDetail
 import com.devhjs.oilmap.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -34,8 +36,19 @@ class StationRepositoryImpl @Inject constructor(
         val maxY = katecY + radius
         
         val cachedEntities = dao.getStationsInRange(minX, maxX, minY, maxY)
+        
+        // 캐시가 유효하려면: 데이터가 존재하고, TTL 이내이며, 요청된 유종의 가격이 실제로 저장되어 있어야 함
         val isCacheValid = cachedEntities.isNotEmpty() && 
-                          cachedEntities.all { System.currentTimeMillis() - it.lastUpdated < cacheTtl }
+                          cachedEntities.all { System.currentTimeMillis() - it.lastUpdated < cacheTtl } &&
+                          cachedEntities.any { entity ->
+                              when (oilType) {
+                                  OilType.GASOLINE -> entity.gasolinePrice > 0
+                                  OilType.DIESEL -> entity.dieselPrice > 0
+                                  OilType.PREMIUM_GASOLINE -> entity.premiumGasolinePrice > 0
+                                  OilType.KEROSENE -> entity.kerosenePrice > 0
+                                  OilType.LPG -> entity.lpgPrice > 0
+                              }
+                          }
 
         if (isCacheValid) {
             // Data Layer에서는 데이터를 반환하기만 수행 (거리 계산 및 정렬은 UseCase 위임)
@@ -68,12 +81,12 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getStationDetail(stationId: String): Station {
+    override suspend fun getStationDetail(stationId: String): StationDetail {
         val existing = dao.getStationById(stationId)
         
         // 주소 정보가 있고 캐시가 유효하면 로컬 데이터 사용
         if (existing != null && existing.address.isNotEmpty() && System.currentTimeMillis() - existing.lastUpdated < cacheTtl) {
-            return existing.toDomain(OilType.GASOLINE)
+            return existing.toDetailDomain()
         }
 
         val response = api.getStationDetail(stationId = stationId)
@@ -82,7 +95,7 @@ class StationRepositoryImpl @Inject constructor(
         val newEntity = detailDto.toEntity(existing)
         dao.insertStation(newEntity)
         
-        return newEntity.toDomain(OilType.GASOLINE)
+        return newEntity.toDetailDomain()
     }
 
     override suspend fun getLowPriceStations(oilType: OilType, area: String?): List<Station> {

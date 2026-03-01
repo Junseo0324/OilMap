@@ -3,6 +3,7 @@ package com.devhjs.oilmap.domain.repository
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.model.Station
+import com.devhjs.oilmap.domain.model.StationDetail
 import kotlinx.coroutines.flow.Flow
 
 interface StationRepository {
@@ -16,7 +17,7 @@ interface StationRepository {
     ): List<Station>
 
     // 주유소 상세 정보 조회
-    suspend fun getStationDetail(stationId: String): Station
+    suspend fun getStationDetail(stationId: String): StationDetail
 
     // 최저가 주유소 Top 10 조회
     suspend fun getLowPriceStations(oilType: OilType, area: String? = null): List<Station>

@@ -3,6 +3,7 @@ package com.devhjs.oilmap.data.repository
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.model.Station
+import com.devhjs.oilmap.domain.model.StationDetail
 import com.devhjs.oilmap.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -41,14 +42,18 @@ class MockStationRepositoryImpl @Inject constructor() : StationRepository {
         }
     }
 
-    override suspend fun getStationDetail(stationId: String): Station {
-        return Station(
+    override suspend fun getStationDetail(stationId: String): StationDetail {
+        return StationDetail(
             id = stationId,
             name = "가짜 상세 주유소",
             brandCode = "SKE",
-            price = 1550,
-            address = "가짜 상세 주소",
+            address = "서울시 강남구 도곡동 333",
             tel = "02-1234-5678",
+            distance = 1200.0,
+            gasolinePrice = 1538,
+            premiumGasolinePrice = 1590,
+            dieselPrice = 1371,
+            lpgPrice = 920,
             hasCarWash = true,
             hasMaintenance = false,
             hasConvenienceStore = true,
