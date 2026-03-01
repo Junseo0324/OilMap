@@ -15,7 +15,9 @@ import com.devhjs.oilmap.presentation.map.MapScreen
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    onNavigateToDetail: (String) -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -24,7 +26,9 @@ fun MainScreen(
     ) {
         // Home - List
         composable<Route.Home> {
-            HomeScreenRoot()
+            HomeScreenRoot(
+                onNavigateToDetail = onNavigateToDetail
+            )
         }
         // Home - Map
         composable<Route.Map> {
@@ -38,7 +42,8 @@ fun MainScreen(
         composable<Route.Detail> { backStackEntry ->
             val detailRoute = backStackEntry.toRoute<Route.Detail>()
             DetailScreenRoot(
-                stationId = detailRoute.stationId
+                stationId = detailRoute.stationId,
+                onBack = onNavigateBack
             )
         }
     }

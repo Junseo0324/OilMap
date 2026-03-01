@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.devhjs.oilmap.core.navigation.MainBottomNavigationBar
+import com.devhjs.oilmap.core.navigation.Route
 
 @Composable
 fun MainScreenRoot(modifier: Modifier = Modifier) {
@@ -20,7 +21,13 @@ fun MainScreenRoot(modifier: Modifier = Modifier) {
     ) { innerPadding ->
         MainScreen(
             modifier = Modifier.padding(innerPadding),
-            navController = navController
+            navController = navController,
+            onNavigateToDetail = { stationId ->
+                navController.navigate(Route.Detail(stationId))
+            },
+            onNavigateBack = {
+                navController.popBackStack()
+            }
         )
     }
 }
