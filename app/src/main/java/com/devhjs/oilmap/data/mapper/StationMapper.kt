@@ -42,8 +42,8 @@ fun StationDto.toEntity(oilType: OilType, existingEntity: StationEntity? = null)
 fun StationDetailDto.toEntity(existingEntity: StationEntity?): StationEntity {
     return StationEntity(
         stationId = stationId,
-        name = name,
-        brandCode = brandCode,
+        name = name.ifEmpty { existingEntity?.name ?: "" },
+        brandCode = brandCode.ifEmpty { existingEntity?.brandCode ?: "" },
         x = existingEntity?.x ?: 0.0,
         y = existingEntity?.y ?: 0.0,
         address = newAddress ?: existingEntity?.address ?: "",

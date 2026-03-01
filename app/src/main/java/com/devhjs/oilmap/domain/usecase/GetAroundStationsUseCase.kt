@@ -36,8 +36,10 @@ class GetAroundStationsUseCase @Inject constructor(
             // 2. Repository 호출 (데이터 소스 추상화 풀링)
             val rawStations = repository.getAroundStations(katecX, katecY, radius, oilType, sortType)
 
-            // 3. 비즈니스 규칙 적용: 정확한 거리 계산 및 정렬 (캐시 데이터의 경우 거리가 Null일 수 있으므로)
-            val processedStations = rawStations.map { station ->
+            // 3. 비즈니스 규칙 적용: 해당 유종을 취급하지 않는 주유소(가격 0원) 제외
+            val processedStations = rawStations
+                .filter { it.price > 0 }
+                .map { station ->
                 // API에서 내려준 거리가 없거나, 캐시 데이터인 경우 현재 요청된 기준점으로 재계산
                 val calculatedDistance = station.distance ?: station.let {
                     if (it.x != null && it.y != null) {
