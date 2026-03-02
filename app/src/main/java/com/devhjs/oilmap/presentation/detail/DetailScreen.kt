@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.devhjs.oilmap.domain.model.StationDetail
 import com.devhjs.oilmap.presentation.component.DetailActionButtons
 import com.devhjs.oilmap.presentation.component.DetailFacilityCard
 import com.devhjs.oilmap.presentation.component.DetailInfoCard
@@ -35,14 +34,12 @@ fun DetailScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // 상단 헤더
         DetailTopBar(
             isFavorite = state.stationDetail?.isFavorite ?: false,
             onBackClick = { onAction(DetailAction.OnBackClick) },
             onFavoriteClick = { onAction(DetailAction.OnFavoriteToggle) }
         )
 
-        // 본문 콘텐츠
         if (state.isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -51,12 +48,26 @@ fun DetailScreen(
                 CircularProgressIndicator(color = AppColors.AlteulMain)
             }
         } else if (state.stationDetail != null) {
-            DetailContent(
-                detail = state.stationDetail,
-                onAction = onAction
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(AppColors.Background)
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                DetailInfoCard(detail = state.stationDetail, onCallClick = { onAction(DetailAction.OnCallClick) })
+
+                DetailPriceCard(detail = state.stationDetail)
+
+                DetailFacilityCard(detail = state.stationDetail)
+
+                DetailActionButtons(
+                    onNavigateClick = { onAction(DetailAction.OnNavigateClick) },
+                    onRefreshClick = { onAction(DetailAction.OnRefreshClick) }
+                )
+            }
         } else {
-            // 에러 상태
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -68,35 +79,5 @@ fun DetailScreen(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun DetailContent(
-    detail: StationDetail,
-    onAction: (DetailAction) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppColors.Background)
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        // 1. 기본 정보 카드
-        DetailInfoCard(detail = detail, onCallClick = { onAction(DetailAction.OnCallClick) })
-
-        // 2. 유종별 가격 카드
-        DetailPriceCard(detail = detail)
-
-        // 3. 편의시설 카드
-        DetailFacilityCard(detail = detail)
-
-        // 4. 하단 버튼 영역
-        DetailActionButtons(
-            onNavigateClick = { onAction(DetailAction.OnNavigateClick) },
-            onRefreshClick = { onAction(DetailAction.OnRefreshClick) }
-        )
     }
 }

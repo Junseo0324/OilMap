@@ -23,6 +23,12 @@ object AppColors {
     val BadgeClosedBg = Color(0xFFFB2C36)
     val BadgeBrandBgDefault = Color(0xFFFE9A00) // Default brand bg from Figma (ex: 알뜰주유소)
 
+    // 즐겨찾기 안내 배너
+    val FavoriteBannerBg = Color(0xFFF0FDF4)
+    val FavoriteBannerBorder = Color(0xFFB9F8CF)
+    val FavoriteBannerTitle = Color(0xFF0D542B)
+    val FavoriteBannerBody = Color(0xFF008236)
+
     // 유종별 색상
     val Gasoline = Color(0xFF2B7FFF)
     val PremiumGasoline = Color(0xFF615FFF)

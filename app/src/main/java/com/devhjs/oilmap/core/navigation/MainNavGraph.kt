@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
-import com.devhjs.oilmap.presentation.favorite.FavoriteScreen
+import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
 import com.devhjs.oilmap.presentation.home.HomeScreenRoot
 import com.devhjs.oilmap.presentation.map.MapScreen
 
@@ -30,7 +30,7 @@ fun MainNavGraph(
         }
         // Favorite
         composable<Route.Favorite> {
-            FavoriteScreen()
+            FavoriteScreenRoot()
         }
         // Detail
         composable<Route.Detail> { backStackEntry ->

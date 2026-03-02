@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.devhjs.oilmap.core.navigation.Route
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
-import com.devhjs.oilmap.presentation.favorite.FavoriteScreen
+import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
 import com.devhjs.oilmap.presentation.home.HomeScreenRoot
 import com.devhjs.oilmap.presentation.map.MapScreen
 
@@ -36,7 +36,10 @@ fun MainScreen(
         }
         // Favorite 
         composable<Route.Favorite> {
-            FavoriteScreen()
+            FavoriteScreenRoot(
+                onNavigateToDetail = onNavigateToDetail,
+                onNavigateBack = onNavigateBack
+            )
         }
         // Detail 
         composable<Route.Detail> { backStackEntry ->
