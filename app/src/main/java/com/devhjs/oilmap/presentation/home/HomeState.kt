@@ -1,5 +1,6 @@
 package com.devhjs.oilmap.presentation.home
 
+import androidx.compose.runtime.Immutable
 import com.devhjs.oilmap.domain.model.Station
 
 data class GasStationUiModel(
@@ -8,6 +9,7 @@ data class GasStationUiModel(
     val isOpen: Boolean = true
 )
 
+@Immutable
 data class HomeState(
     val stations: List<GasStationUiModel> = emptyList(),
     val totalCount: Int = 0,

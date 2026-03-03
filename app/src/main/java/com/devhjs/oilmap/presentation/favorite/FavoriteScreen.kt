@@ -18,9 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -32,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.R
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.component.FavoriteInfoBanner
 import com.devhjs.oilmap.presentation.component.FavoriteStationCard
@@ -91,7 +89,7 @@ fun FavoriteScreen(
                 FuelTypeButton(
                     text = "휘발유",
                     isSelected = state.selectedResourceType == "휘발유",
-                    iconVector = Icons.Filled.Place,
+                    icon = R.drawable.gasoline,
                     modifier = Modifier
                         .weight(1f)
                         .clickable { onAction(FavoriteAction.OnResourceTypeSelected("휘발유")) }
@@ -99,7 +97,7 @@ fun FavoriteScreen(
                 FuelTypeButton(
                     text = "경유",
                     isSelected = state.selectedResourceType == "경유",
-                    iconVector = Icons.Filled.Build,
+                    icon = R.drawable.diesel,
                     modifier = Modifier
                         .weight(1f)
                         .clickable { onAction(FavoriteAction.OnResourceTypeSelected("경유")) }
@@ -107,7 +105,7 @@ fun FavoriteScreen(
                 FuelTypeButton(
                     text = "LPG",
                     isSelected = state.selectedResourceType == "LPG",
-                    iconVector = Icons.Filled.Info,
+                    icon = R.drawable.lpg,
                     modifier = Modifier
                         .weight(1f)
                         .clickable { onAction(FavoriteAction.OnResourceTypeSelected("LPG")) }

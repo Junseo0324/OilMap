@@ -15,11 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -32,19 +28,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.R
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
-
 import com.devhjs.oilmap.presentation.home.HomeAction
 import com.devhjs.oilmap.presentation.home.HomeState
 
 @Composable
 fun HomeHeader(
-    state: HomeState,
-    onAction: (HomeAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    state: HomeState = HomeState(),
+    onAction: (HomeAction) -> Unit= {},
 ) {
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
@@ -54,7 +52,6 @@ fun HomeHeader(
             .background(Color.White)
             .padding(16.dp)
     ) {
-        // App Title and Favorite Icon
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -63,18 +60,20 @@ fun HomeHeader(
             Text(
                 text = "OilMap",
                 style = AppTextStyles.headlineLarge,
-                color = Color(0xFF0A0A0A) // Design color
+                color = Color(0xFF0A0A0A)
             )
             Icon(
-                imageVector = Icons.Default.Star, // Changed from Default to Filled
+                painter = painterResource(R.drawable.star_filled),
                 contentDescription = "즐겨찾기",
-                tint = AppColors.Gray800
+                tint = AppColors.FavoriteIcon,
+                modifier = Modifier.clickable {
+                    onAction(HomeAction.OnFavoriteClick)
+                }
             )
         }
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        // Fuel Type Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -82,7 +81,7 @@ fun HomeHeader(
             FuelTypeButton(
                 text = "휘발유",
                 isSelected = state.selectedResourceType == "휘발유",
-                iconVector = Icons.Filled.Place, // Using basic place icon temporarily
+                icon = R.drawable.gasoline,
                 modifier = Modifier
                     .weight(1f)
                     .clickable { onAction(HomeAction.OnResourceTypeSelected("휘발유")) }
@@ -90,7 +89,7 @@ fun HomeHeader(
             FuelTypeButton(
                 text = "경유",
                 isSelected = state.selectedResourceType == "경유",
-                iconVector = Icons.Filled.Build, // Temporarily substitute
+                icon = R.drawable.diesel,
                 modifier = Modifier
                     .weight(1f)
                     .clickable { onAction(HomeAction.OnResourceTypeSelected("경유")) }
@@ -98,7 +97,7 @@ fun HomeHeader(
             FuelTypeButton(
                 text = "LPG",
                 isSelected = state.selectedResourceType == "LPG",
-                iconVector = Icons.Filled.Info, // Temporarily substitute
+                icon = R.drawable.lpg,
                 modifier = Modifier
                     .weight(1f)
                     .clickable { onAction(HomeAction.OnResourceTypeSelected("LPG")) }
@@ -107,13 +106,11 @@ fun HomeHeader(
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        // Count Text & Sort Dropdown Row
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Count text
             Row(verticalAlignment = Alignment.Bottom) {
                 Text(
                     text = "총 ",
@@ -132,12 +129,11 @@ fun HomeHeader(
                 )
             }
 
-            // Sort Dropdown
             Box {
                 Box(
                     modifier = Modifier
                         .width(92.dp)
-                        .height(36.dp) // adjusted for better visual balance with text
+                        .height(36.dp)
                         .background(Color.White, RoundedCornerShape(10.dp))
                         .border(1.dp, AppColors.Border, RoundedCornerShape(10.dp))
                         .clickable { isDropdownExpanded = true },
@@ -185,4 +181,10 @@ fun HomeHeader(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun HomeHeaderPreview() {
+    HomeHeader()
 }

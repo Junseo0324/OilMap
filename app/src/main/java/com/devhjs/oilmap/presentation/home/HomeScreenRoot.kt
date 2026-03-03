@@ -14,7 +14,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun HomeScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    onNavigateToDetail: (String) -> Unit = {}
+    onNavigateToDetail: (String) -> Unit = {},
+    onNavigateToFavorite: () -> Unit = {}
 ) {
     val homeState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -43,6 +44,9 @@ fun HomeScreenRoot(
             when (event) {
                 is HomeEvent.NavigateToStationDetail -> {
                     onNavigateToDetail(event.stationId)
+                }
+                is HomeEvent.NavigateToFavorite -> {
+                   onNavigateToFavorite()
                 }
             }
         }

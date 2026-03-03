@@ -27,7 +27,8 @@ fun MainScreen(
         // Home - List
         composable<Route.Home> {
             HomeScreenRoot(
-                onNavigateToDetail = onNavigateToDetail
+                onNavigateToDetail = onNavigateToDetail,
+                onNavigateToFavorite = { navController.navigate(Route.Favorite) }
             )
         }
         // Home - Map

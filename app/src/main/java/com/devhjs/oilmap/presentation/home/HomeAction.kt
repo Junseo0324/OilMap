@@ -5,4 +5,5 @@ sealed interface HomeAction {
     data class OnResourceTypeSelected(val resourceType: String) : HomeAction
     data class OnSortOptionSelected(val sortOption: String) : HomeAction
     data object OnPermissionGranted : HomeAction
+    data object OnFavoriteClick : HomeAction
 }

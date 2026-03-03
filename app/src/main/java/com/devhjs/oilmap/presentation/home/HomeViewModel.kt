@@ -61,6 +61,11 @@ class HomeViewModel @Inject constructor(
             is HomeAction.OnPermissionGranted -> {
                 fetchStations()
             }
+            is HomeAction.OnFavoriteClick -> {
+                viewModelScope.launch {
+                    _event.emit(HomeEvent.NavigateToFavorite)
+                }
+            }
         }
     }
 
