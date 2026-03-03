@@ -9,7 +9,7 @@ import androidx.navigation.toRoute
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
 import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
 import com.devhjs.oilmap.presentation.home.HomeScreenRoot
-import com.devhjs.oilmap.presentation.map.MapScreen
+import com.devhjs.oilmap.presentation.map.MapScreenRoot
 
 @Composable
 fun MainNavGraph(
@@ -26,7 +26,7 @@ fun MainNavGraph(
         }
         // Home - Map
         composable<Route.Map> {
-            MapScreen()
+            MapScreenRoot()
         }
         // Favorite
         composable<Route.Favorite> {

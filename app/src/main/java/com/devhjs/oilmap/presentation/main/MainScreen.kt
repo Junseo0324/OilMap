@@ -10,7 +10,7 @@ import com.devhjs.oilmap.core.navigation.Route
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
 import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
 import com.devhjs.oilmap.presentation.home.HomeScreenRoot
-import com.devhjs.oilmap.presentation.map.MapScreen
+import com.devhjs.oilmap.presentation.map.MapScreenRoot
 
 @Composable
 fun MainScreen(
@@ -32,7 +32,9 @@ fun MainScreen(
         }
         // Home - Map
         composable<Route.Map> {
-            MapScreen()
+            MapScreenRoot(
+                onNavigateToDetail = onNavigateToDetail
+            )
         }
         // Favorite 
         composable<Route.Favorite> {

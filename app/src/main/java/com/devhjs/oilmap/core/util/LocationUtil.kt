@@ -28,4 +28,24 @@ object LocationUtil {
         
         return Pair(result.x, result.y)
     }
+
+    /**
+     * KATEC 좌표를 WGS84 위경도로 역변환합니다.
+     * Google Maps 마커 표시 시 Station의 x/y(KATEC)를 위경도로 변환할 때 사용합니다.
+     */
+    fun katecToWgs84(x: Double, y: Double): Pair<Double, Double> {
+        val crsFactory = CRSFactory()
+        val wgs84 = crsFactory.createFromParameters("WGS84", "+proj=longlat +datum=WGS84 +no_defs")
+        val katec = crsFactory.createFromParameters(
+            "KATEC",
+            "+proj=tmerc +lat_0=38 +lon_0=128 +k=0.9999 +x_0=400000 +y_0=600000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43"
+        )
+
+        val transform = CoordinateTransformFactory().createTransform(katec, wgs84)
+        val result = ProjCoordinate()
+        transform.transform(ProjCoordinate(x, y), result)
+
+        // result.x = lng, result.y = lat
+        return Pair(result.y, result.x)
+    }
 }

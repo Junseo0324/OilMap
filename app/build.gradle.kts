@@ -14,6 +14,7 @@ if (localPropertiesFile.exists()) {
     properties.load(localPropertiesFile.inputStream())
 }
 val opinetApiKey = properties.getProperty("OPINET_API_KEY")?.replace("\"", "") ?: ""
+val mapsApiKey = properties.getProperty("MAPS_API_KEY")?.replace("\"", "") ?: ""
 
 android {
     namespace = "com.devhjs.oilmap"
@@ -29,6 +30,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
         buildConfigField("String", "OPINET_API_KEY", "\"$opinetApiKey\"")
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
 
     flavorDimensions += "environment"
@@ -107,4 +109,7 @@ dependencies {
     // Location
     implementation(libs.play.services.location)
     implementation(libs.kotlinx.coroutines.play.services)
+
+    // Google Maps
+    implementation(libs.maps.compose)
 }
