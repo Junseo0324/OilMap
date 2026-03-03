@@ -6,6 +6,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -35,7 +36,7 @@ fun MainBottomNavigationBar(navController: NavHostController) {
                         }
                     },
                     icon = {
-                        Icon(imageVector = item.icon, contentDescription = item.title)
+                        Icon(painter = painterResource(item.icon), contentDescription = item.title)
                     },
                     label = {
                         Text(text = item.title)
