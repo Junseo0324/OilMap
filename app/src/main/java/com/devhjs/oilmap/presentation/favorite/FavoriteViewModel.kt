@@ -56,15 +56,10 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             getFavoriteStationsUseCase().collect { stations ->
-                val uiModels = stations.map { station ->
-                    FavoriteStationUiModel(
-                        station = station
-                    )
-                }
                 _state.update {
                     it.copy(
-                        stations = uiModels,
-                        totalCount = uiModels.size,
+                        stations = stations,
+                        totalCount = stations.size,
                         isLoading = false
                     )
                 }

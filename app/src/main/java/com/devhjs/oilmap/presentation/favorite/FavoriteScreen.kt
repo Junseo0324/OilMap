@@ -175,11 +175,11 @@ fun FavoriteScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(state.stations, key = { it.station.id }) { uiModel ->
+                    items(state.stations, key = { it.id }) { station ->
                         FavoriteStationCard(
-                            uiModel = uiModel,
-                            onClick = { onAction(FavoriteAction.OnStationClick(uiModel.station.id)) },
-                            onToggleFavorite = { onAction(FavoriteAction.OnToggleFavorite(uiModel.station)) }
+                            station = station,
+                            onClick = { onAction(FavoriteAction.OnStationClick(station.id)) },
+                            onToggleFavorite = { onAction(FavoriteAction.OnToggleFavorite(station)) }
                         )
                     }
 
@@ -198,8 +198,7 @@ fun FavoriteScreen(
 @Composable
 fun FavoriteScreenPreview() {
     val dummyStations = listOf(
-        FavoriteStationUiModel(
-            station = Station(
+            Station(
                 id = "1",
                 name = "알뜰주유소 도곡점",
                 brandCode = "RTE",
@@ -207,7 +206,6 @@ fun FavoriteScreenPreview() {
                 distance = 1000.0,
                 isFavorite = true
             )
-        )
     )
     FavoriteScreen(
         state = FavoriteState(stations = dummyStations, totalCount = 1),

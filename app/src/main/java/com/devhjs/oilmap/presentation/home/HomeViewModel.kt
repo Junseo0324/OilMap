@@ -3,7 +3,6 @@ package com.devhjs.oilmap.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devhjs.oilmap.core.util.Result
-import com.devhjs.oilmap.core.util.TimeUtil
 import com.devhjs.oilmap.domain.location.LocationTracker
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
@@ -103,18 +102,11 @@ class HomeViewModel @Inject constructor(
                 )
                 when(result) {
                     is Result.Success -> {
-                        val uiStations = result.data.mapIndexed { index, station ->
-                            GasStationUiModel(
-                                station = station,
-                                isLowestPrice = sortType == SortType.PRICE && index == 0
-                            )
-                        }
-                        
                         _state.update { 
                             it.copy(
                                 isLoading = false, 
-                                stations = uiStations,
-                                totalCount = uiStations.size
+                                stations = result.data,
+                                totalCount = result.data.size
                             ) 
                         }
                     }

@@ -28,9 +28,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.core.util.getBrandName
+import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
-import com.devhjs.oilmap.presentation.favorite.FavoriteStationUiModel
 
 /**
  * Figma 즐겨찾기 카드 컴포넌트
@@ -38,12 +38,11 @@ import com.devhjs.oilmap.presentation.favorite.FavoriteStationUiModel
  */
 @Composable
 fun FavoriteStationCard(
-    uiModel: FavoriteStationUiModel,
+    station: Station,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val station = uiModel.station
 
     Box(
         modifier = modifier

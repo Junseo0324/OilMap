@@ -26,27 +26,20 @@ import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
-import com.devhjs.oilmap.presentation.home.GasStationUiModel
 
 
 @Composable
 fun GasStationCard(
     modifier: Modifier = Modifier,
-    uiModel: GasStationUiModel,
+    station: Station,
     onClick: () -> Unit= {},
 ) {
-    val isLowestPrice = uiModel.isLowestPrice
-    val station = uiModel.station
-    
-    val borderColor = if (isLowestPrice) AppColors.AlteulMain else AppColors.Border
-    val borderWidth = 1.dp
-    
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(Color.White)
-            .border(borderWidth, borderColor, RoundedCornerShape(16.dp))
+            .border(1.dp, AppColors.Border, RoundedCornerShape(16.dp))
             .clickable { onClick() }
     ) {
         Column {
@@ -54,9 +47,7 @@ fun GasStationCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        if (isLowestPrice) Brush.horizontalGradient(
-                            colors = listOf(AppColors.AlteulMain, AppColors.AlteulDark)
-                        ) else Brush.horizontalGradient(
+                        Brush.horizontalGradient(
                             colors = listOf(AppColors.Background, AppColors.Background)
                         )
                     )
@@ -66,7 +57,7 @@ fun GasStationCard(
                 Text(
                     text = getBrandName(station.brandCode),
                     style = AppTextStyles.listCountBold,
-                    color = if (isLowestPrice) Color.White else AppColors.Gray800
+                    color = AppColors.Gray800
                 )
                 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -81,22 +72,6 @@ fun GasStationCard(
                         style = AppTextStyles.labelSmall,
                         color = Color.White
                     )
-                }
-                
-                Spacer(modifier = Modifier.weight(1f))
-                
-                if (isLowestPrice) {
-                    Box(
-                        modifier = Modifier
-                            .background(Color.White, RoundedCornerShape(10.dp))
-                            .padding(horizontal = 8.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = "최저가",
-                            style = AppTextStyles.lowestPriceBadge,
-                            color = AppColors.AlteulDark
-                        )
-                    }
                 }
             }
             
@@ -184,10 +159,6 @@ fun GasStationCard(
 @Composable
 private fun GasStationCardPreview() {
     GasStationCard(
-        uiModel = GasStationUiModel(
-            station = Station(
-                "1", "농협알뜰 도곡점", "알뜰주유소", 1538,
-            )
-        )
+        station = Station("1", "농협알뜰 도곡점", "알뜰주유소", 1538,)
     )
 }

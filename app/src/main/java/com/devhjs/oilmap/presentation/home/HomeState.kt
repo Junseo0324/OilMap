@@ -3,14 +3,10 @@ package com.devhjs.oilmap.presentation.home
 import androidx.compose.runtime.Immutable
 import com.devhjs.oilmap.domain.model.Station
 
-data class GasStationUiModel(
-    val station: Station,
-    val isLowestPrice: Boolean = false
-)
 
 @Immutable
 data class HomeState(
-    val stations: List<GasStationUiModel> = emptyList(),
+    val stations: List<Station> = emptyList(),
     val totalCount: Int = 0,
     val isLoading: Boolean = false,
     val selectedResourceType: String = "휘발유", // 휘발유, 경유, LPG

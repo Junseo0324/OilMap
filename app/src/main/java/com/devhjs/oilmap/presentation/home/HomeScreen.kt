@@ -40,10 +40,10 @@ fun Homescreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(state.stations, key = { it.station.id }) { uiModel ->
+                items(state.stations, key = { it.id }) { station ->
                     GasStationCard(
-                        uiModel = uiModel,
-                        onClick = { onAction(HomeAction.OnStationClick(uiModel.station.id)) }
+                        station = station,
+                        onClick = { onAction(HomeAction.OnStationClick(station.id)) }
                     )
                 }
             }
@@ -56,18 +56,10 @@ fun Homescreen(
 @Composable
 fun HomeScreenPreview() {
     val dummyStations = listOf(
-        GasStationUiModel(
-            station = Station("1", "농협알뜰 도곡점", "알뜰주유소", 1538, 1.0, hasConvenienceStore = true),
-            isLowestPrice = true
-        ),
-        GasStationUiModel(
-            station = Station("2", "자영알뜰 서초점", "자영알뜰", 1545, 1.2, hasConvenienceStore = true),
-            isLowestPrice = false
-        ),
-        GasStationUiModel(
-            station = Station("3", "SK에너지 역삼주유소", "SK에너지", 1565, 0.5, hasCarWash = true, hasConvenienceStore = true),
-            isLowestPrice = false
-        )
+        Station("1", "농협알뜰 도곡점", "알뜰주유소", 1538, 1.0, hasConvenienceStore = true),
+        Station("2", "자영알뜰 서초점", "자영알뜰", 1545, 1.2, hasConvenienceStore = true),
+        Station("3", "SK에너지 역삼주유소", "SK에너지", 1565, 0.5, hasCarWash = true, hasConvenienceStore = true),
+
     )
     Homescreen(
         state = HomeState(stations = dummyStations, totalCount = 8),
