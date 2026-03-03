@@ -206,8 +206,7 @@ fun FavoriteScreenPreview() {
                 price = 1538,
                 distance = 1000.0,
                 isFavorite = true
-            ),
-            isOpen = true
+            )
         )
     )
     FavoriteScreen(

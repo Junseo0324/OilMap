@@ -20,20 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 import com.devhjs.oilmap.presentation.home.GasStationUiModel
 
-import com.devhjs.oilmap.core.util.getBrandName
-
 
 @Composable
 fun GasStationCard(
+    modifier: Modifier = Modifier,
     uiModel: GasStationUiModel,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit= {},
 ) {
     val isLowestPrice = uiModel.isLowestPrice
     val station = uiModel.station
@@ -50,7 +50,6 @@ fun GasStationCard(
             .clickable { onClick() }
     ) {
         Column {
-            // Header
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,7 +63,6 @@ fun GasStationCard(
                     .padding(horizontal = 20.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // 브랜드 이름
                 Text(
                     text = getBrandName(station.brandCode),
                     style = AppTextStyles.listCountBold,
@@ -73,7 +71,6 @@ fun GasStationCard(
                 
                 Spacer(modifier = Modifier.width(8.dp))
                 
-                // 브랜드 아이콘 배지 (예시로 주황색 타원 등)
                 Box(
                     modifier = Modifier
                         .background(AppColors.BadgeBrandBgDefault, RoundedCornerShape(10.dp))
@@ -88,7 +85,6 @@ fun GasStationCard(
                 
                 Spacer(modifier = Modifier.weight(1f))
                 
-                // 최저가 뱃지
                 if (isLowestPrice) {
                     Box(
                         modifier = Modifier
@@ -102,28 +98,11 @@ fun GasStationCard(
                         )
                     }
                 }
-                
-                // 영업종료
-                if (!uiModel.isOpen) {
-                    Box(
-                        modifier = Modifier
-                            .background(AppColors.BadgeClosedBg, RoundedCornerShape(10.dp))
-                            .padding(horizontal = 8.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = "영업종료",
-                            style = AppTextStyles.lowestPriceBadge,
-                            color = Color.White
-                        )
-                    }
-                }
             }
             
-            // Body
             Column(
                 modifier = Modifier.padding(20.dp)
             ) {
-                // 주유소명
                 Text(
                     text = station.name,
                     style = AppTextStyles.headlineMedium,
@@ -132,7 +111,6 @@ fun GasStationCard(
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 
-                // 가격 및 거리 정보
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -163,7 +141,6 @@ fun GasStationCard(
                     
                     Column(horizontalAlignment = Alignment.End) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            // 오피넷 API 거리 단위(m)를 km로 변환하여 표시
                             val distanceKm = (station.distance ?: 0.0) / 1000.0
                             Text(
                                 text = "${String.format("%.1f", distanceKm)}km",
@@ -201,4 +178,16 @@ fun GasStationCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun GasStationCardPreview() {
+    GasStationCard(
+        uiModel = GasStationUiModel(
+            station = Station(
+                "1", "농협알뜰 도곡점", "알뜰주유소", 1538,
+            )
+        )
+    )
 }

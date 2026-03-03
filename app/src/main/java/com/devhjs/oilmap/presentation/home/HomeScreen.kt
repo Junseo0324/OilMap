@@ -58,18 +58,15 @@ fun HomeScreenPreview() {
     val dummyStations = listOf(
         GasStationUiModel(
             station = Station("1", "농협알뜰 도곡점", "알뜰주유소", 1538, 1.0, hasConvenienceStore = true),
-            isLowestPrice = true,
-            isOpen = true
+            isLowestPrice = true
         ),
         GasStationUiModel(
             station = Station("2", "자영알뜰 서초점", "자영알뜰", 1545, 1.2, hasConvenienceStore = true),
-            isLowestPrice = false,
-            isOpen = true
+            isLowestPrice = false
         ),
         GasStationUiModel(
             station = Station("3", "SK에너지 역삼주유소", "SK에너지", 1565, 0.5, hasCarWash = true, hasConvenienceStore = true),
-            isLowestPrice = false,
-            isOpen = true
+            isLowestPrice = false
         )
     )
     Homescreen(

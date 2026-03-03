@@ -5,8 +5,7 @@ import com.devhjs.oilmap.domain.model.Station
 
 data class GasStationUiModel(
     val station: Station,
-    val isLowestPrice: Boolean = false,
-    val isOpen: Boolean = true
+    val isLowestPrice: Boolean = false
 )
 
 @Immutable

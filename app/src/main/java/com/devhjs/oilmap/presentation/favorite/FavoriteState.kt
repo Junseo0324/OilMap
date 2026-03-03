@@ -4,8 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.devhjs.oilmap.domain.model.Station
 
 data class FavoriteStationUiModel(
-    val station: Station,
-    val isOpen: Boolean = true
+    val station: Station
 )
 
 @Immutable

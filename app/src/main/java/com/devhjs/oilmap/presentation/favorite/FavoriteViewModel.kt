@@ -58,8 +58,7 @@ class FavoriteViewModel @Inject constructor(
             getFavoriteStationsUseCase().collect { stations ->
                 val uiModels = stations.map { station ->
                     FavoriteStationUiModel(
-                        station = station,
-                        isOpen = true // 추후 영업 상태 로직 추가 시 활용
+                        station = station
                     )
                 }
                 _state.update {
