@@ -16,9 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.R
@@ -58,27 +57,18 @@ fun FavoriteScreen(
             ) {
                 IconButton(onClick = { onAction(FavoriteAction.OnBackClick) }) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        painter = painterResource(R.drawable.arrow_back),
                         contentDescription = "뒤로가기",
                         tint = AppColors.Gray900
                     )
                 }
-                Spacer(modifier = Modifier.width(4.dp))
-                Icon(
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = null,
-                    tint = Color(0xFFEAB308), // yellow-500
-                    modifier = Modifier.size(24.dp)
-                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "즐겨찾기",
-                    style = AppTextStyles.headlineMedium,
-                    color = AppColors.Gray900
+                    style = AppTextStyles.headlineMedium.copy(color = AppColors.Gray900, fontWeight = FontWeight.Bold),
                 )
             }
 
-            // ===== 유종 탭 =====
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -112,7 +102,6 @@ fun FavoriteScreen(
                 )
             }
 
-            // ===== 카운트 텍스트: "총 N개 즐겨찾기" =====
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -121,22 +110,18 @@ fun FavoriteScreen(
             ) {
                 Text(
                     text = "총 ",
-                    style = AppTextStyles.listCountNormal,
-                    color = AppColors.Gray700
+                    style = AppTextStyles.listCountNormal.copy(color = AppColors.Gray700),
                 )
                 Text(
                     text = "${state.totalCount}개",
-                    style = AppTextStyles.listCountBold,
-                    color = AppColors.Gray900
+                    style = AppTextStyles.listCountBold.copy(color = AppColors.Gray900),
                 )
                 Text(
                     text = " 즐겨찾기",
-                    style = AppTextStyles.listCountNormal,
-                    color = AppColors.Gray700
+                    style = AppTextStyles.listCountNormal.copy(color = AppColors.Gray700),
                 )
             }
 
-            // ===== 즐겨찾기 목록 =====
             if (state.isLoading) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -145,7 +130,6 @@ fun FavoriteScreen(
                     CircularProgressIndicator(color = AppColors.AlteulMain)
                 }
             } else if (state.stations.isEmpty()) {
-                // 빈 상태
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -154,9 +138,9 @@ fun FavoriteScreen(
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
-                            imageVector = Icons.Filled.Star,
+                            painter = painterResource(R.drawable.star_filled),
                             contentDescription = null,
-                            tint = AppColors.Gray500,
+                            tint = AppColors.FavoriteIcon,
                             modifier = Modifier.size(48.dp)
                         )
                         Spacer(modifier = Modifier.height(12.dp))
@@ -182,8 +166,6 @@ fun FavoriteScreen(
                             onToggleFavorite = { onAction(FavoriteAction.OnToggleFavorite(station)) }
                         )
                     }
-
-                    // 안내 배너 (목록 하단)
                     item {
                         Spacer(modifier = Modifier.height(4.dp))
                         FavoriteInfoBanner()
@@ -209,6 +191,15 @@ fun FavoriteScreenPreview() {
     )
     FavoriteScreen(
         state = FavoriteState(stations = dummyStations, totalCount = 1),
+        onAction = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FavoriteScreenPreviewNotData() {
+    FavoriteScreen(
+        state = FavoriteState(stations = emptyList(), totalCount = 1),
         onAction = {}
     )
 }

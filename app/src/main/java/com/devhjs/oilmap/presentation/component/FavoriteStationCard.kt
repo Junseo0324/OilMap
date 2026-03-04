@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,7 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.R
 import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
@@ -38,10 +38,10 @@ import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
  */
 @Composable
 fun FavoriteStationCard(
+    modifier: Modifier = Modifier,
     station: Station,
-    onClick: () -> Unit,
-    onToggleFavorite: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit= {},
+    onToggleFavorite: () -> Unit= {},
 ) {
 
     Box(
@@ -82,7 +82,7 @@ fun FavoriteStationCard(
                     modifier = Modifier.size(24.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Star,
+                        painter = painterResource(R.drawable.star_filled),
                         contentDescription = "즐겨찾기 해제",
                         tint = Color(0xFFEAB308),
                         modifier = Modifier.size(24.dp)
@@ -112,10 +112,10 @@ fun FavoriteStationCard(
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "◎",
-                        style = AppTextStyles.bodySmall,
-                        color = AppColors.Gray600
+                    Icon(
+                        painter = painterResource(R.drawable.location),
+                        contentDescription = "거리",
+                        tint = AppColors.Gray600,
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     val distanceKm = (station.distance ?: 0.0) / 1000.0
@@ -134,11 +134,14 @@ fun FavoriteStationCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "◷",
-                        style = AppTextStyles.captionMedium,
-                        color = AppColors.Gray600
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.time),
+                        contentDescription = "정보 업데이트",
+                        tint = AppColors.Gray600,
+                        modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -148,7 +151,7 @@ fun FavoriteStationCard(
                     )
                 }
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    painter = painterResource(R.drawable.arrow_right),
                     contentDescription = "상세보기",
                     tint = AppColors.Gray500,
                     modifier = Modifier.size(20.dp)
@@ -156,4 +159,20 @@ fun FavoriteStationCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun FavoriteStationCardPreview() {
+    FavoriteStationCard(
+        station =
+            Station(
+                id = "1",
+                name = "알뜰주유소 도곡점",
+                brandCode = "RTE",
+                price = 1538,
+                distance = 1000.0,
+                isFavorite = true
+            )
+    )
 }
