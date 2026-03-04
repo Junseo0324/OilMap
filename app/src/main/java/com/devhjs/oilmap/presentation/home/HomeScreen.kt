@@ -20,9 +20,9 @@ import com.devhjs.oilmap.presentation.designsystem.AppColors
 
 @Composable
 fun Homescreen(
-    state: HomeState,
-    onAction: (HomeAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    state: HomeState = HomeState(),
+    onAction: (HomeAction) -> Unit= {},
 ) {
     Box(
         modifier = modifier
