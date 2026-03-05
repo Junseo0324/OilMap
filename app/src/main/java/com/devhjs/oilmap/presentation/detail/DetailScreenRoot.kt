@@ -13,7 +13,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun DetailScreenRoot(
     modifier: Modifier = Modifier,
-    stationId: String,
     viewModel: DetailViewModel = hiltViewModel(),
     onBack: () -> Unit = {}
 ) {

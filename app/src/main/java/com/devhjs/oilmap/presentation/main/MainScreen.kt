@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.devhjs.oilmap.core.navigation.Route
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
 import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
@@ -45,10 +44,8 @@ fun MainScreen(
             )
         }
         // Detail 
-        composable<Route.Detail> { backStackEntry ->
-            val detailRoute = backStackEntry.toRoute<Route.Detail>()
+        composable<Route.Detail> {
             DetailScreenRoot(
-                stationId = detailRoute.stationId,
                 onBack = onNavigateBack
             )
         }
