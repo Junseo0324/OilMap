@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.devhjs.oilmap.presentation.detail.DetailScreenRoot
 import com.devhjs.oilmap.presentation.favorite.FavoriteScreenRoot
 import com.devhjs.oilmap.presentation.home.HomeScreenRoot
@@ -13,30 +12,43 @@ import com.devhjs.oilmap.presentation.map.MapScreenRoot
 
 @Composable
 fun MainNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = Route.Home,
-        modifier = Modifier
+        modifier = modifier
     ) {
-        // Home - List
         composable<Route.Home> {
-            HomeScreenRoot()
+            HomeScreenRoot(
+                onNavigateToDetail = { stationId ->
+                    navController.navigate(Route.Detail(stationId))
+                },
+                onNavigateToFavorite = { navController.navigate(Route.Favorite) }
+            )
         }
         // Home - Map
         composable<Route.Map> {
-            MapScreenRoot()
+            MapScreenRoot(
+                onNavigateToDetail = { stationId ->
+                    navController.navigate(Route.Detail(stationId))
+                }
+            )
         }
         // Favorite
         composable<Route.Favorite> {
-            FavoriteScreenRoot()
+            FavoriteScreenRoot(
+                onNavigateToDetail = { stationId ->
+                    navController.navigate(Route.Detail(stationId))
+                },
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         // Detail
-        composable<Route.Detail> { backStackEntry ->
-            val detailRoute = backStackEntry.toRoute<Route.Detail>()
+        composable<Route.Detail> {
             DetailScreenRoot(
-                stationId = detailRoute.stationId
+                onBack = { navController.popBackStack() }
             )
         }
     }
