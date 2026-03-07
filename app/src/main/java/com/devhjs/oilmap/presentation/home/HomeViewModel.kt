@@ -48,10 +48,13 @@ class HomeViewModel @Inject constructor(
                 val newSortType = when(action.sortOption) {
                     "가격순" -> SortType.PRICE
                     "거리순" -> SortType.DISTANCE
-                    else -> SortType.PRICE
+                    else -> SortType.DISTANCE
                 }
-                _state.update { it.copy(selectedSortOption = action.sortOption) }
-                fetchStations(oilType = currentOilType(), sortType = newSortType)
+                val sorted = when (newSortType) {
+                    SortType.PRICE -> _state.value.stations.sortedBy { it.price }
+                    SortType.DISTANCE -> _state.value.stations.sortedBy { it.distance }
+                }
+                _state.update { it.copy(selectedSortOption = action.sortOption, stations = sorted) }
             }
             is HomeAction.OnStationClick -> {
                 viewModelScope.launch {
@@ -82,7 +85,7 @@ class HomeViewModel @Inject constructor(
         return when(_state.value.selectedSortOption) {
             "가격순" -> SortType.PRICE
             "거리순" -> SortType.DISTANCE
-            else -> SortType.PRICE
+            else -> SortType.DISTANCE
         }
     }
 

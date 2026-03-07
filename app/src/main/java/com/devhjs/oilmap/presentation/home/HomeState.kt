@@ -10,7 +10,7 @@ data class HomeState(
     val totalCount: Int = 0,
     val isLoading: Boolean = false,
     val selectedResourceType: String = "휘발유", // 휘발유, 경유, LPG
-    val selectedSortOption: String = "가격순" // 가격순, 거리순
+    val selectedSortOption: String = "거리순" // 가격순, 거리순
 )
 
 
