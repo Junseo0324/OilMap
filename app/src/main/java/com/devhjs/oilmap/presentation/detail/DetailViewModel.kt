@@ -3,7 +3,9 @@ package com.devhjs.oilmap.presentation.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devhjs.oilmap.core.util.LocationUtil
 import com.devhjs.oilmap.core.util.Result
+import com.devhjs.oilmap.domain.location.LocationTracker
 import com.devhjs.oilmap.domain.usecase.GetStationDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getStationDetailUseCase: GetStationDetailUseCase,
+    private val locationTracker: LocationTracker,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -63,7 +66,18 @@ class DetailViewModel @Inject constructor(
     private fun loadDetail() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            when (val result = getStationDetailUseCase(stationId)) {
+
+            // 현재 위치의 KATEC 좌표 획득 (거리 계산용)
+            val location = locationTracker.getCurrentLocation()
+            val katecCoords = location?.let {
+                LocationUtil.wgs84ToKatec(it.latitude, it.longitude)
+            }
+
+            when (val result = getStationDetailUseCase(
+                stationId = stationId,
+                userKatecX = katecCoords?.first,
+                userKatecY = katecCoords?.second
+            )) {
                 is Result.Success -> {
                     _state.update {
                         it.copy(

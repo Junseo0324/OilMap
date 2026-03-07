@@ -13,6 +13,7 @@ import com.devhjs.oilmap.domain.repository.StationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlin.math.sqrt
 
 class StationRepositoryImpl @Inject constructor(
     private val api: OpinetService,
@@ -81,12 +82,22 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getStationDetail(stationId: String): StationDetail {
+    override suspend fun getStationDetail(
+        stationId: String,
+        userKatecX: Double?,
+        userKatecY: Double?
+    ): StationDetail {
         val existing = dao.getStationById(stationId)
         
-        // 주소 정보가 있고 캐시가 유효하면 로컬 데이터 사용
+        val distance = if (userKatecX != null && userKatecY != null && existing != null && existing.x > 0 && existing.y > 0) {
+            sqrt(
+                (existing.x - userKatecX) * (existing.x - userKatecX) +
+                (existing.y - userKatecY) * (existing.y - userKatecY)
+            )
+        } else null
+
         if (existing != null && existing.address.isNotEmpty() && System.currentTimeMillis() - existing.lastUpdated < cacheTtl) {
-            return existing.toDetailDomain()
+            return existing.toDetailDomain(distance)
         }
 
         val response = api.getStationDetail(stationId = stationId)
@@ -95,7 +106,14 @@ class StationRepositoryImpl @Inject constructor(
         val newEntity = detailDto.toEntity(existing)
         dao.insertStation(newEntity)
         
-        return newEntity.toDetailDomain()
+        val newDistance = if (userKatecX != null && userKatecY != null && newEntity.x > 0 && newEntity.y > 0) {
+            sqrt(
+                (newEntity.x - userKatecX) * (newEntity.x - userKatecX) +
+                (newEntity.y - userKatecY) * (newEntity.y - userKatecY)
+            )
+        } else null
+        
+        return newEntity.toDetailDomain(newDistance)
     }
 
     override suspend fun getLowPriceStations(oilType: OilType, area: String?): List<Station> {

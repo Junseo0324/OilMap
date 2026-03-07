@@ -17,7 +17,11 @@ interface StationRepository {
     ): List<Station>
 
     // 주유소 상세 정보 조회
-    suspend fun getStationDetail(stationId: String): StationDetail
+    suspend fun getStationDetail(
+        stationId: String,
+        userKatecX: Double? = null,
+        userKatecY: Double? = null
+    ): StationDetail
 
     // 최저가 주유소 Top 10 조회
     suspend fun getLowPriceStations(oilType: OilType, area: String? = null): List<Station>

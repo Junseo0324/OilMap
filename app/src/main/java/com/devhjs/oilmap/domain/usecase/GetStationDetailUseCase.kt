@@ -12,10 +12,16 @@ class GetStationDetailUseCase @Inject constructor(
     /**
      * 특정 주유소의 상세 정보 조회
      * @param stationId 주유소 고유 ID (UNI_ID)
+     * @param userKatecX 사용자 현재 위치의 KATEC X 좌표 (거리 계산용)
+     * @param userKatecY 사용자 현재 위치의 KATEC Y 좌표 (거리 계산용)
      */
-    suspend operator fun invoke(stationId: String): Result<StationDetail, DataError> {
+    suspend operator fun invoke(
+        stationId: String,
+        userKatecX: Double? = null,
+        userKatecY: Double? = null
+    ): Result<StationDetail, DataError> {
         return try {
-            val stationDetail = repository.getStationDetail(stationId)
+            val stationDetail = repository.getStationDetail(stationId, userKatecX, userKatecY)
             Result.Success(stationDetail)
         } catch (e: Exception) {
             e.printStackTrace()

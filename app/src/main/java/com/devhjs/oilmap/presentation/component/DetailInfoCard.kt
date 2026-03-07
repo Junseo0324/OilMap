@@ -7,10 +7,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -50,18 +48,6 @@ fun DetailInfoCard(
                 style = AppTextStyles.bodySmall.copy(fontWeight = FontWeight.Medium),
                 color = AppColors.Gray600
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Box(
-                modifier = Modifier
-                    .background(AppColors.BadgeBrandBgDefault, RoundedCornerShape(4.dp))
-                    .padding(horizontal = 8.dp, vertical = 2.dp)
-            ) {
-                Text(
-                    text = getBrandName(detail.brandCode),
-                    style = AppTextStyles.labelSmall.copy(fontWeight = FontWeight.Bold),
-                    color = Color.White
-                )
-            }
         }
 
         // 주유소 이름

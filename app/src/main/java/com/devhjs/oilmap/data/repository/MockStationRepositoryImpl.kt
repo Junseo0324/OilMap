@@ -42,7 +42,11 @@ class MockStationRepositoryImpl @Inject constructor() : StationRepository {
         }
     }
 
-    override suspend fun getStationDetail(stationId: String): StationDetail {
+    override suspend fun getStationDetail(
+        stationId: String,
+        userKatecX: Double?,
+        userKatecY: Double?
+    ): StationDetail {
         return StationDetail(
             id = stationId,
             name = "가짜 상세 주유소",
