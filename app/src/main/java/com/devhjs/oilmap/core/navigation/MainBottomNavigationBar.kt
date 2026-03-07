@@ -6,24 +6,21 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hasRoute
 
 @Composable
 fun MainBottomNavigationBar(
-    currentDestination: NavDestination?,
+    selectedRoute: String?,
     onNavigate: (BottomNavItem) -> Unit
 ) {
-    val bottomTabs = BottomNavItem.entries.toTypedArray()
-    val isBottomBarVisible = bottomTabs.any {
-        currentDestination?.hasRoute(it.route::class) == true
+    val isBottomBarVisible = BottomNavItem.items.any {
+        selectedRoute == it.routeName
     }
 
     if (isBottomBarVisible) {
         NavigationBar {
-            bottomTabs.forEach { item ->
+            BottomNavItem.items.forEach { item ->
                 NavigationBarItem(
-                    selected = currentDestination?.hasRoute(item.route::class) == true,
+                    selected = selectedRoute == item.routeName,
                     onClick = { onNavigate(item) },
                     icon = {
                         Icon(painter = painterResource(item.icon), contentDescription = item.title)

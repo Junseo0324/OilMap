@@ -2,19 +2,26 @@ package com.devhjs.oilmap.core.navigation
 
 import com.devhjs.oilmap.R
 
-enum class BottomNavItem(
+data class BottomNavItem(
     val route: Route,
+    val routeName: String,
     val title: String,
     val icon: Int
 ) {
-    HOME(
-        route = Route.Home,
-        title = "리스트",
-        icon = R.drawable.map
-    ),
-    MAP(
-        route = Route.Map,
-        title = "지도",
-        icon = R.drawable.list
-    )
+    companion object {
+        val items = listOf(
+            BottomNavItem(
+                route = Route.Home,
+                routeName = Route.Home::class.qualifiedName.orEmpty(),
+                title = "리스트",
+                icon = R.drawable.map
+            ),
+            BottomNavItem(
+                route = Route.Map,
+                routeName = Route.Map::class.qualifiedName.orEmpty(),
+                title = "지도",
+                icon = R.drawable.list
+            )
+        )
+    }
 }
