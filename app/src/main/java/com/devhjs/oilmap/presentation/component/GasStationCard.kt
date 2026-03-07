@@ -59,20 +59,6 @@ fun GasStationCard(
                     style = AppTextStyles.listCountBold,
                     color = AppColors.Gray800
                 )
-                
-                Spacer(modifier = Modifier.width(8.dp))
-                
-                Box(
-                    modifier = Modifier
-                        .background(AppColors.BadgeBrandBgDefault, RoundedCornerShape(10.dp))
-                        .padding(horizontal = 8.dp, vertical = 2.dp)
-                ) {
-                    Text(
-                        text = station.brandCode,
-                        style = AppTextStyles.labelSmall,
-                        color = Color.White
-                    )
-                }
             }
             
             Column(
@@ -131,23 +117,26 @@ fun GasStationCard(
                     }
                 }
                 
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(1.dp, AppColors.Border, RoundedCornerShape(8.dp))
-                        .padding(vertical = 12.dp, horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    if (station.hasCarWash) {
-                        ServiceTag(text = "세차", bgColor = AppColors.TagCarWashBg, textColor = AppColors.TagCarWashText)
-                    }
-                    if (station.hasMaintenance) {
-                        ServiceTag(text = "정비", bgColor = AppColors.TagMaintenanceBg, textColor = AppColors.TagMaintenanceText)
-                    }
-                    if (station.hasConvenienceStore) {
-                        ServiceTag(text = "편의점", bgColor = AppColors.TagConvenienceBg, textColor = AppColors.TagConvenienceText)
+                val hasAnyService = station.hasCarWash || station.hasMaintenance || station.hasConvenienceStore
+                if (hasAnyService) {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(1.dp, AppColors.Border, RoundedCornerShape(8.dp))
+                            .padding(vertical = 12.dp, horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        if (station.hasCarWash) {
+                            ServiceTag(text = "세차", bgColor = AppColors.TagCarWashBg, textColor = AppColors.TagCarWashText)
+                        }
+                        if (station.hasMaintenance) {
+                            ServiceTag(text = "정비", bgColor = AppColors.TagMaintenanceBg, textColor = AppColors.TagMaintenanceText)
+                        }
+                        if (station.hasConvenienceStore) {
+                            ServiceTag(text = "편의점", bgColor = AppColors.TagConvenienceBg, textColor = AppColors.TagConvenienceText)
+                        }
                     }
                 }
             }
