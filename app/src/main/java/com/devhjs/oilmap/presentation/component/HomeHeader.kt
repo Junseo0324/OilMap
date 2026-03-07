@@ -33,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.R
+import com.devhjs.oilmap.domain.model.OilType
+import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 import com.devhjs.oilmap.presentation.home.HomeAction
@@ -79,28 +81,28 @@ fun HomeHeader(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             FuelTypeButton(
-                text = "휘발유",
-                isSelected = state.selectedResourceType == "휘발유",
+                text = OilType.GASOLINE.displayName,
+                isSelected = state.selectedOilType == OilType.GASOLINE,
                 icon = R.drawable.gasoline,
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onAction(HomeAction.OnResourceTypeSelected("휘발유")) }
+                    .clickable { onAction(HomeAction.OnResourceTypeSelected(OilType.GASOLINE)) }
             )
             FuelTypeButton(
-                text = "경유",
-                isSelected = state.selectedResourceType == "경유",
+                text = OilType.DIESEL.displayName,
+                isSelected = state.selectedOilType == OilType.DIESEL,
                 icon = R.drawable.diesel,
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onAction(HomeAction.OnResourceTypeSelected("경유")) }
+                    .clickable { onAction(HomeAction.OnResourceTypeSelected(OilType.DIESEL)) }
             )
             FuelTypeButton(
-                text = "LPG",
-                isSelected = state.selectedResourceType == "LPG",
+                text = OilType.LPG.displayName,
+                isSelected = state.selectedOilType == OilType.LPG,
                 icon = R.drawable.lpg,
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onAction(HomeAction.OnResourceTypeSelected("LPG")) }
+                    .clickable { onAction(HomeAction.OnResourceTypeSelected(OilType.LPG)) }
             )
         }
         
@@ -144,7 +146,7 @@ fun HomeHeader(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = state.selectedSortOption,
+                            text = state.selectedSortType.displayName,
                             style = AppTextStyles.bodySmall.copy(fontWeight = FontWeight.Medium),
                             color = AppColors.Gray800
                         )
@@ -164,16 +166,16 @@ fun HomeHeader(
                     modifier = Modifier.background(Color.White)
                 ) {
                     DropdownMenuItem(
-                        text = { Text("가격순", style = AppTextStyles.bodySmall, color = AppColors.Gray800) },
+                        text = { Text(SortType.PRICE.displayName, style = AppTextStyles.bodySmall, color = AppColors.Gray800) },
                         onClick = {
-                            onAction(HomeAction.OnSortOptionSelected("가격순"))
+                            onAction(HomeAction.OnSortOptionSelected(SortType.PRICE))
                             isDropdownExpanded = false
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("거리순", style = AppTextStyles.bodySmall, color = AppColors.Gray800) },
+                        text = { Text(SortType.DISTANCE.displayName, style = AppTextStyles.bodySmall, color = AppColors.Gray800) },
                         onClick = {
-                            onAction(HomeAction.OnSortOptionSelected("거리순"))
+                            onAction(HomeAction.OnSortOptionSelected(SortType.DISTANCE))
                             isDropdownExpanded = false
                         }
                     )

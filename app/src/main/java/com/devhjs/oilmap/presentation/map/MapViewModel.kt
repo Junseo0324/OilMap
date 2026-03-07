@@ -37,12 +37,12 @@ class MapViewModel @Inject constructor(
     fun onAction(action: MapAction) {
         when (action) {
             is MapAction.OnResourceTypeSelected -> {
-                _state.update { it.copy(selectedResourceType = action.resourceType) }
-                fetchStations(oilType = mapToOilType(action.resourceType), sortType = currentSortType())
+                _state.update { it.copy(selectedOilType = action.oilType) }
+                fetchStations(oilType = action.oilType)
             }
             is MapAction.OnSortOptionSelected -> {
-                _state.update { it.copy(selectedSortOption = action.sortOption) }
-                fetchStations(oilType = currentOilType(), sortType = mapToSortType(action.sortOption))
+                _state.update { it.copy(selectedSortType = action.sortType) }
+                fetchStations(sortType = action.sortType)
             }
             is MapAction.OnStationClick -> {
                 viewModelScope.launch {
@@ -58,25 +58,9 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun currentOilType(): OilType = mapToOilType(_state.value.selectedResourceType)
-    private fun currentSortType(): SortType = mapToSortType(_state.value.selectedSortOption)
-
-    private fun mapToOilType(resourceType: String): OilType = when (resourceType) {
-        "휘발유" -> OilType.GASOLINE
-        "경유" -> OilType.DIESEL
-        "LPG" -> OilType.LPG
-        else -> OilType.GASOLINE
-    }
-
-    private fun mapToSortType(sortOption: String): SortType = when (sortOption) {
-        "가격순" -> SortType.PRICE
-        "거리순" -> SortType.DISTANCE
-        else -> SortType.PRICE
-    }
-
     private fun fetchStations(
-        oilType: OilType = currentOilType(),
-        sortType: SortType = currentSortType()
+        oilType: OilType = _state.value.selectedOilType,
+        sortType: SortType = _state.value.selectedSortType
     ) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }

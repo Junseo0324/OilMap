@@ -37,7 +37,7 @@ class FavoriteViewModel @Inject constructor(
                 }
             }
             is FavoriteAction.OnResourceTypeSelected -> {
-                _state.update { it.copy(selectedResourceType = action.resourceType) }
+                _state.update { it.copy(selectedOilType = action.oilType) }
             }
             is FavoriteAction.OnToggleFavorite -> {
                 viewModelScope.launch {

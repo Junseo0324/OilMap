@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.R
+import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.component.FavoriteInfoBanner
 import com.devhjs.oilmap.presentation.component.FavoriteStationCard
@@ -77,28 +78,28 @@ fun FavoriteScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FuelTypeButton(
-                    text = "휘발유",
-                    isSelected = state.selectedResourceType == "휘발유",
+                    text = OilType.GASOLINE.displayName,
+                    isSelected = state.selectedOilType == OilType.GASOLINE,
                     icon = R.drawable.gasoline,
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected("휘발유")) }
+                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected(OilType.GASOLINE)) }
                 )
                 FuelTypeButton(
-                    text = "경유",
-                    isSelected = state.selectedResourceType == "경유",
+                    text = OilType.DIESEL.displayName,
+                    isSelected = state.selectedOilType == OilType.DIESEL,
                     icon = R.drawable.diesel,
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected("경유")) }
+                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected(OilType.DIESEL)) }
                 )
                 FuelTypeButton(
-                    text = "LPG",
-                    isSelected = state.selectedResourceType == "LPG",
+                    text = OilType.LPG.displayName,
+                    isSelected = state.selectedOilType == OilType.LPG,
                     icon = R.drawable.lpg,
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected("LPG")) }
+                        .clickable { onAction(FavoriteAction.OnResourceTypeSelected(OilType.LPG)) }
                 )
             }
 

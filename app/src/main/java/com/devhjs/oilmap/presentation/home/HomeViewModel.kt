@@ -36,20 +36,14 @@ class HomeViewModel @Inject constructor(
     fun onAction(action: HomeAction) {
         when(action) {
             is HomeAction.OnResourceTypeSelected -> {
-                val newOilType = when(action.resourceType) {
-                    "휘발유" -> OilType.GASOLINE
-                    "경유" -> OilType.DIESEL
-                    "LPG" -> OilType.LPG
-                    else -> OilType.GASOLINE
-                }
-                _state.update { it.copy(selectedResourceType = action.resourceType) }
-                fetchStations(oilType = newOilType, sortType = currentSortType())
+                _state.update { it.copy(selectedOilType = action.oilType) }
+                fetchStations(oilType = action.oilType)
             }
             is HomeAction.OnSortOptionSelected -> {
                 _state.update {
                     it.copy(
-                        selectedSortOption = action.sortOption,
-                        sortedStations = sortStations(it.stations, action.sortOption)
+                        selectedSortType = action.sortType,
+                        sortedStations = sortStations(it.stations, action.sortType)
                     )
                 }
             }
@@ -69,33 +63,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun sortStations(stations: List<Station>, sortOption: String): List<Station> {
-        return when (sortOption) {
-            "가격순" -> stations.sortedBy { it.price }
-            else -> stations.sortedBy { it.distance }
-        }
-    }
-
-    private fun currentOilType(): OilType {
-        return when(_state.value.selectedResourceType) {
-            "휘발유" -> OilType.GASOLINE
-            "경유" -> OilType.DIESEL
-            "LPG" -> OilType.LPG
-            else -> OilType.GASOLINE
-        }
-    }
-
-    private fun currentSortType(): SortType {
-        return when(_state.value.selectedSortOption) {
-            "가격순" -> SortType.PRICE
-            "거리순" -> SortType.DISTANCE
-            else -> SortType.DISTANCE
+    private fun sortStations(stations: List<Station>, sortType: SortType): List<Station> {
+        return when (sortType) {
+            SortType.PRICE -> stations.sortedBy { it.price }
+            SortType.DISTANCE -> stations.sortedBy { it.distance }
         }
     }
 
     private fun fetchStations(
-        oilType: OilType = currentOilType(),
-        sortType: SortType = currentSortType()
+        oilType: OilType = _state.value.selectedOilType,
+        sortType: SortType = _state.value.selectedSortType
     ) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
@@ -113,7 +90,7 @@ class HomeViewModel @Inject constructor(
                             it.copy(
                                 isLoading = false,
                                 stations = result.data,
-                                sortedStations = sortStations(result.data, it.selectedSortOption),
+                                sortedStations = sortStations(result.data, sortType),
                                 totalCount = result.data.size
                             )
                         }

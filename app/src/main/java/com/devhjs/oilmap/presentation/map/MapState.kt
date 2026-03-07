@@ -1,5 +1,7 @@
 package com.devhjs.oilmap.presentation.map
 
+import com.devhjs.oilmap.domain.model.OilType
+import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.model.Station
 import com.google.android.gms.maps.model.LatLng
 
@@ -13,8 +15,8 @@ data class MapState(
     val stations: List<MapStationUiModel> = emptyList(),
     val totalCount: Int = 0,
     val isLoading: Boolean = false,
-    val selectedResourceType: String = "휘발유",
-    val selectedSortOption: String = "가격순",
+    val selectedOilType: OilType = OilType.GASOLINE,
+    val selectedSortType: SortType = SortType.DISTANCE,
     val currentLocation: LatLng? = null,
     val selectedStationId: String? = null
 )

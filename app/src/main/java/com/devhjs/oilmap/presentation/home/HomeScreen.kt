@@ -28,7 +28,7 @@ fun Homescreen(
 ) {
     val listState = rememberLazyListState()
 
-    LaunchedEffect(state.selectedSortOption) {
+    LaunchedEffect(state.selectedSortType) {
         listState.scrollToItem(0)
     }
 
