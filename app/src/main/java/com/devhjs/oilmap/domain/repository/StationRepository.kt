@@ -27,7 +27,7 @@ interface StationRepository {
     suspend fun getLowPriceStations(oilType: OilType, area: String? = null): List<Station>
 
     // 즐겨찾기 관련
-    fun getFavoriteStations(): Flow<List<Station>>
+    fun getFavoriteStations(oilType: OilType = OilType.GASOLINE): Flow<List<Station>>
     suspend fun toggleFavorite(station: Station)
     suspend fun isFavorite(stationId: String): Boolean
 }

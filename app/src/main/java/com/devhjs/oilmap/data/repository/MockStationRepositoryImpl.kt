@@ -70,7 +70,7 @@ class MockStationRepositoryImpl @Inject constructor() : StationRepository {
         return getAroundStations(0.0, 0.0, 5000, oilType, SortType.PRICE).sortedBy { it.price }
     }
 
-    override fun getFavoriteStations(): Flow<List<Station>> {
+    override fun getFavoriteStations(oilType: OilType): Flow<List<Station>> {
         val mockFavorites = listOf(
             Station(id = "mock_fav_1", name = "단골 주유소 1", brandCode = "SKE", price = 1500, isFavorite = true),
             Station(id = "mock_fav_2", name = "단골 주유소 2", brandCode = "GSC", price = 1520, isFavorite = true)

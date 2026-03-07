@@ -32,10 +32,6 @@ import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 
-/**
- * Figma 즐겨찾기 카드 컴포넌트
- * 브랜드명 + 주유소명 + ☆ + 가격 + 거리 + 업데이트 시간 + > chevron
- */
 @Composable
 fun FavoriteStationCard(
     modifier: Modifier = Modifier,

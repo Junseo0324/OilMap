@@ -22,10 +22,6 @@ import com.devhjs.oilmap.R
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 
-/**
- * Figma의 즐겨찾기 안내 배너
- * 초록색 배경 + ℹ 아이콘 + 안내 문구
- */
 @Composable
 fun FavoriteInfoBanner() {
     Row(
@@ -53,7 +49,7 @@ fun FavoriteInfoBanner() {
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "즐겨찾기는 이 기기에만 저장됩니다. 앱을 삭제하거나 브라우저 데이터를 삭제하면 초기화됩니다.",
+                text = "즐겨찾기는 이 기기에만 저장됩니다. 앱을 삭제하거나 캐시 데이터를 삭제하면 초기화됩니다.",
                 style = AppTextStyles.bodySmall,
                 color = AppColors.FavoriteBannerBody
             )

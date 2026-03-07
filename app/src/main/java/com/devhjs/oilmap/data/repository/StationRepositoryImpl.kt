@@ -136,9 +136,9 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getFavoriteStations(): Flow<List<Station>> {
+    override fun getFavoriteStations(oilType: OilType): Flow<List<Station>> {
         return dao.getFavoriteStations().map { entities ->
-            entities.map { it.toDomain(OilType.GASOLINE) }
+            entities.map { it.toDomain(oilType) }
         }
     }
 
