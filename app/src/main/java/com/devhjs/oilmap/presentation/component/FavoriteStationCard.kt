@@ -88,11 +88,6 @@ fun FavoriteStationCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
                         text = "%,d".format(station.price),
@@ -107,21 +102,6 @@ fun FavoriteStationCard(
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(R.drawable.location),
-                        contentDescription = "거리",
-                        tint = AppColors.Gray600,
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    val distanceKm = (station.distance ?: 0.0) / 1000.0
-                    Text(
-                        text = "${String.format("%.0f", distanceKm)}km",
-                        style = AppTextStyles.distanceDisplay,
-                        color = AppColors.Gray700
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
