@@ -6,6 +6,7 @@ import com.devhjs.oilmap.core.util.Result
 import com.devhjs.oilmap.domain.location.LocationTracker
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
+import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.domain.usecase.GetAroundStationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,16 +46,12 @@ class HomeViewModel @Inject constructor(
                 fetchStations(oilType = newOilType, sortType = currentSortType())
             }
             is HomeAction.OnSortOptionSelected -> {
-                val newSortType = when(action.sortOption) {
-                    "가격순" -> SortType.PRICE
-                    "거리순" -> SortType.DISTANCE
-                    else -> SortType.DISTANCE
+                _state.update {
+                    it.copy(
+                        selectedSortOption = action.sortOption,
+                        sortedStations = sortStations(it.stations, action.sortOption)
+                    )
                 }
-                val sorted = when (newSortType) {
-                    SortType.PRICE -> _state.value.stations.sortedBy { it.price }
-                    SortType.DISTANCE -> _state.value.stations.sortedBy { it.distance }
-                }
-                _state.update { it.copy(selectedSortOption = action.sortOption, stations = sorted) }
             }
             is HomeAction.OnStationClick -> {
                 viewModelScope.launch {
@@ -69,6 +66,13 @@ class HomeViewModel @Inject constructor(
                     _event.emit(HomeEvent.NavigateToFavorite)
                 }
             }
+        }
+    }
+
+    private fun sortStations(stations: List<Station>, sortOption: String): List<Station> {
+        return when (sortOption) {
+            "가격순" -> stations.sortedBy { it.price }
+            else -> stations.sortedBy { it.distance }
         }
     }
 
@@ -105,12 +109,13 @@ class HomeViewModel @Inject constructor(
                 )
                 when(result) {
                     is Result.Success -> {
-                        _state.update { 
+                        _state.update {
                             it.copy(
-                                isLoading = false, 
+                                isLoading = false,
                                 stations = result.data,
+                                sortedStations = sortStations(result.data, it.selectedSortOption),
                                 totalCount = result.data.size
-                            ) 
+                            )
                         }
                     }
                     is Result.Error -> {

@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +26,12 @@ fun Homescreen(
     state: HomeState = HomeState(),
     onAction: (HomeAction) -> Unit= {},
 ) {
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(state.selectedSortOption) {
+        listState.scrollToItem(0)
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -36,11 +44,12 @@ fun Homescreen(
             )
             
             LazyColumn(
+                state = listState,
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(state.stations, key = { it.id }) { station ->
+                items(state.sortedStations, key = { it.id }) { station ->
                     GasStationCard(
                         station = station,
                         onClick = { onAction(HomeAction.OnStationClick(station.id)) }
