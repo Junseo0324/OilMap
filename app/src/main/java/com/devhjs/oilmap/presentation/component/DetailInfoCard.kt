@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,13 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devhjs.oilmap.R
+import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.StationDetail
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
-import com.devhjs.oilmap.core.util.getBrandName
 
 @Composable
 fun DetailInfoCard(
@@ -41,7 +44,6 @@ fun DetailInfoCard(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // 브랜드 + 뱃지
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = getBrandName(detail.brandCode),
@@ -77,7 +79,11 @@ fun DetailInfoCard(
                 .padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(text = "📍", fontSize = 18.sp)
+            Icon(
+                painter = painterResource(R.drawable.location),
+                contentDescription = "주소",
+                tint = AppColors.Gray600
+            )
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(text = "주소", style = AppTextStyles.bodySmall, color = AppColors.Gray600)
                 Text(
@@ -103,7 +109,11 @@ fun DetailInfoCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(text = "📞", fontSize = 18.sp)
+            Icon(
+                painter = painterResource(R.drawable.phone),
+                contentDescription = "전화번호",
+                tint = AppColors.Gray600
+            )
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -139,7 +149,11 @@ fun DetailInfoCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = "🕐", fontSize = 14.sp)
+            Icon(
+                painter = painterResource(R.drawable.time),
+                contentDescription = "시간",
+                tint = AppColors.Gray600
+            )
             Text(
                 text = "09:00 기준",
                 style = AppTextStyles.bodySmall,

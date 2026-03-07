@@ -34,7 +34,7 @@ fun DetailFacilityCard(detail: StationDetail) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = "🏪 편의시설",
+            text = "편의시설",
             style = AppTextStyles.headlineMedium.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold),
             color = AppColors.Gray900
         )
@@ -42,13 +42,13 @@ fun DetailFacilityCard(detail: StationDetail) {
         if (hasFacilities) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (detail.hasConvenienceStore) {
-                    DetailFacilityTag(text = "🛒 편의점", bgColor = Color(0xFFF0FDF4), textColor = Color(0xFF0D542B))
+                    DetailFacilityTag(text = "편의점", bgColor = Color(0xFFF0FDF4), textColor = Color(0xFF0D542B))
                 }
                 if (detail.hasCarWash) {
-                    DetailFacilityTag(text = "🚿 세차", bgColor = AppColors.TagCarWashBg, textColor = AppColors.TagCarWashText)
+                    DetailFacilityTag(text = "세차", bgColor = AppColors.TagCarWashBg, textColor = AppColors.TagCarWashText)
                 }
                 if (detail.hasMaintenance) {
-                    DetailFacilityTag(text = "🔧 정비", bgColor = AppColors.TagMaintenanceBg, textColor = AppColors.TagMaintenanceText)
+                    DetailFacilityTag(text = "정비", bgColor = AppColors.TagMaintenanceBg, textColor = AppColors.TagMaintenanceText)
                 }
             }
         } else {
