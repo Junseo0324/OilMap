@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.R
+import com.devhjs.oilmap.core.util.formatUpdateTime
 import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
@@ -121,7 +122,7 @@ fun FavoriteStationCard(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "정보 업데이트",
+                        text = formatUpdateTime(station.lastUpdated),
                         style = AppTextStyles.bodySmall,
                         color = AppColors.Gray600
                     )

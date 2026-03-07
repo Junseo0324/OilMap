@@ -90,7 +90,8 @@ fun StationEntity.toDomain(oilType: OilType, distance: Double? = null): Station 
         hasMaintenance = hasMaintenance,
         hasConvenienceStore = hasConvenienceStore,
         isQualityCertified = isQualityCertified,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        lastUpdated = lastUpdated
     )
 }
 
@@ -113,6 +114,7 @@ fun StationEntity.toDetailDomain(distance: Double? = null): StationDetail {
         hasMaintenance = hasMaintenance,
         hasConvenienceStore = hasConvenienceStore,
         isQualityCertified = isQualityCertified,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        lastUpdated = lastUpdated
     )
 }

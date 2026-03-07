@@ -16,3 +16,13 @@ fun getBrandName(code: String): String = when (code) {
     "SKG" -> "SK가스"
     else -> code
 }
+
+/**
+ * lastUpdated 타임스탬프를 "HH:mm 기준" 형태로 변환합니다.
+ */
+fun formatUpdateTime(lastUpdated: Long?): String {
+    return lastUpdated?.let {
+        val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.KOREA)
+        "${sdf.format(java.util.Date(it))} 기준"
+    } ?: "정보 없음"
+}

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devhjs.oilmap.R
+import com.devhjs.oilmap.core.util.formatUpdateTime
 import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.StationDetail
 import com.devhjs.oilmap.presentation.designsystem.AppColors
@@ -141,7 +142,7 @@ fun DetailInfoCard(
                 tint = AppColors.Gray600
             )
             Text(
-                text = "09:00 기준",
+                text = formatUpdateTime(detail.lastUpdated),
                 style = AppTextStyles.bodySmall,
                 color = AppColors.Gray600
             )

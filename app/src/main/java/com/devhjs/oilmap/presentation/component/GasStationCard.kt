@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devhjs.oilmap.core.util.formatUpdateTime
 import com.devhjs.oilmap.core.util.getBrandName
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.designsystem.AppColors
@@ -94,7 +95,7 @@ fun GasStationCard(
                         }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "10:00 기준",
+                            text = formatUpdateTime(station.lastUpdated),
                             style = AppTextStyles.captionMedium,
                             color = AppColors.Gray500
                         )

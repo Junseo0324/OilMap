@@ -14,5 +14,6 @@ data class Station(
     val hasMaintenance: Boolean = false,
     val hasConvenienceStore: Boolean = false,
     val isQualityCertified: Boolean = false,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val lastUpdated: Long? = null
 )
