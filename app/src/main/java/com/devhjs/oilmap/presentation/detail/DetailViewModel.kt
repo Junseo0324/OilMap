@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.devhjs.oilmap.core.util.LocationUtil
 import com.devhjs.oilmap.core.util.Result
 import com.devhjs.oilmap.domain.location.LocationTracker
+import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.domain.usecase.GetStationDetailUseCase
+import com.devhjs.oilmap.domain.usecase.ToggleFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getStationDetailUseCase: GetStationDetailUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val locationTracker: LocationTracker,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -58,7 +61,20 @@ class DetailViewModel @Inject constructor(
                 loadDetail()
             }
             is DetailAction.OnFavoriteToggle -> {
-                // 추후 즐겨찾기 토글 로직 구현
+                val detail = _state.value.stationDetail ?: return
+                viewModelScope.launch {
+                    val station = Station(
+                        id = detail.id,
+                        name = detail.name,
+                        brandCode = detail.brandCode,
+                        price = detail.gasolinePrice,
+                        isFavorite = detail.isFavorite
+                    )
+                    toggleFavoriteUseCase(station)
+                    _state.update {
+                        it.copy(stationDetail = detail.copy(isFavorite = !detail.isFavorite))
+                    }
+                }
             }
         }
     }

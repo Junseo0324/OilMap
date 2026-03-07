@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -17,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devhjs.oilmap.R
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 
@@ -52,9 +53,11 @@ fun DetailTopBar(
         )
         IconButton(onClick = onFavoriteClick) {
             Icon(
-                imageVector = Icons.Filled.Star,
+                painter = painterResource(
+                    if (isFavorite) R.drawable.star_filled else R.drawable.star_default
+                ),
                 contentDescription = "즐겨찾기",
-                tint = if (isFavorite) Color(0xFFFFC107) else AppColors.Gray500
+                tint = if (isFavorite) AppColors.FavoriteIcon else AppColors.Gray500
             )
         }
     }
