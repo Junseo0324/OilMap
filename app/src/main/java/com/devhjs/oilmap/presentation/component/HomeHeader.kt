@@ -60,7 +60,7 @@ fun HomeHeader(
         ) {
             Text(
                 text = "주유 어디",
-                style = AppTextStyles.headlineLarge.copy(color =Color(0xFF0A0A0A), fontWeight = FontWeight.Bold),
+                style = AppTextStyles.headlineLarge.copy(color =Color(0xFF0A0A0A)),
             )
         }
         

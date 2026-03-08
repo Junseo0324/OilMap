@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 
 object AppTextStyles {
     val headlineLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
@@ -17,7 +17,7 @@ object AppTextStyles {
     )
 
     val headlineMedium = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 28.sp,
@@ -26,7 +26,7 @@ object AppTextStyles {
     )
 
     val headlineSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
@@ -37,7 +37,7 @@ object AppTextStyles {
     // ========== 본문 텍스트 ==========
 
     val titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         lineHeight = 28.sp,
@@ -46,7 +46,7 @@ object AppTextStyles {
     )
 
     val bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -55,7 +55,7 @@ object AppTextStyles {
     )
 
     val bodyMedium = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -64,7 +64,7 @@ object AppTextStyles {
     )
 
     val bodySmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -75,7 +75,7 @@ object AppTextStyles {
     // ========== 라벨 & 버튼 ==========
 
     val labelLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -84,7 +84,7 @@ object AppTextStyles {
     )
 
     val labelLargeInactive = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -93,7 +93,7 @@ object AppTextStyles {
     )
 
     val labelMedium = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -102,7 +102,7 @@ object AppTextStyles {
     )
 
     val labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -111,7 +111,7 @@ object AppTextStyles {
     )
 
     val labelExtraSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -122,7 +122,7 @@ object AppTextStyles {
     // ========== 가격 표시 (핵심) ==========
 
     val priceDisplay = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         lineHeight = 32.sp,
@@ -131,7 +131,7 @@ object AppTextStyles {
     )
 
     val priceUnit = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 28.sp,
@@ -140,7 +140,7 @@ object AppTextStyles {
     )
 
     val priceDetailDisplay = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
@@ -149,7 +149,7 @@ object AppTextStyles {
     )
 
     val priceDetailUnit = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -160,7 +160,7 @@ object AppTextStyles {
     // ========== 거리 표시 ==========
 
     val distanceDisplay = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp,
         lineHeight = 28.sp,
@@ -171,7 +171,7 @@ object AppTextStyles {
     // ========== 보조 정보 ==========
 
     val captionLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -180,7 +180,7 @@ object AppTextStyles {
     )
 
     val captionMedium = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -189,7 +189,7 @@ object AppTextStyles {
     )
 
     val noDataText = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 28.sp,
@@ -198,7 +198,7 @@ object AppTextStyles {
     )
 
     val errorText = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 28.sp,
@@ -209,7 +209,7 @@ object AppTextStyles {
     // ========== 특수 상태 ==========
 
     val lowestPriceBadge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -218,7 +218,7 @@ object AppTextStyles {
     )
 
     val closedBadge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -229,7 +229,7 @@ object AppTextStyles {
     // ========== 리스트 카운트 ==========
 
     val listCountNormal = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -238,7 +238,7 @@ object AppTextStyles {
     )
 
     val listCountBold = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = AppFonts.pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
