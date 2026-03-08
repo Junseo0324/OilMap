@@ -38,10 +38,12 @@ class StationRepositoryImpl @Inject constructor(
         
         val cachedEntities = dao.getStationsInRange(minX, maxX, minY, maxY)
         
-        // 캐시가 유효하려면: 데이터가 존재하고, TTL 이내이며, 요청된 유종의 가격이 실제로 저장되어 있어야 함
-        val isCacheValid = cachedEntities.isNotEmpty() && 
-                          cachedEntities.all { System.currentTimeMillis() - it.lastUpdated < cacheTtl } &&
-                          cachedEntities.any { entity ->
+        // TTL 이내의 유효한 데이터만 필터링
+        val validEntities = cachedEntities.filter { System.currentTimeMillis() - it.lastUpdated < cacheTtl }
+        
+        // 캐시가 유효하려면: 유효한 데이터가 충분히 존재하고(예: 1개 이상), 요청된 유종의 가격이 저장된 곳이 있어야 함
+        val isCacheValid = validEntities.isNotEmpty() && 
+                          validEntities.any { entity ->
                               when (oilType) {
                                   OilType.GASOLINE -> entity.gasolinePrice > 0
                                   OilType.DIESEL -> entity.dieselPrice > 0
@@ -53,7 +55,7 @@ class StationRepositoryImpl @Inject constructor(
 
         if (isCacheValid) {
             // Data Layer에서는 데이터를 반환하기만 수행 (거리 계산 및 정렬은 UseCase 위임)
-            return cachedEntities.map { entity ->
+            return validEntities.map { entity ->
                 entity.toDomain(oilType)
             }
         }

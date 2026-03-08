@@ -83,7 +83,6 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
 
-            // 현재 위치의 KATEC 좌표 획득 (거리 계산용)
             val location = locationTracker.getCurrentLocation()
             val katecCoords = location?.let {
                 LocationUtil.wgs84ToKatec(it.latitude, it.longitude)
