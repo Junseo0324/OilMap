@@ -14,3 +14,6 @@
 .cxx
 local.properties
 /.idea/
+/app/prod/
+/GasNow_Opinet_API_Guide.md
+/opinet_api_summary.md
