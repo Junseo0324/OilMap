@@ -21,6 +21,12 @@ data class BottomNavItem(
                 routeName = Route.Map::class.qualifiedName.orEmpty(),
                 title = "지도",
                 icon = R.drawable.list
+            ),
+            BottomNavItem(
+                route = Route.Favorite,
+                routeName = Route.Favorite::class.qualifiedName.orEmpty(),
+                title = "즐겨찾기",
+                icon = R.drawable.star_filled
             )
         )
     }

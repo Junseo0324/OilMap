@@ -24,8 +24,7 @@ fun MainNavGraph(
             HomeScreenRoot(
                 onNavigateToDetail = { stationId ->
                     navController.navigate(Route.Detail(stationId))
-                },
-                onNavigateToFavorite = { navController.navigate(Route.Favorite) }
+                }
             )
         }
         // Home - Map

@@ -64,14 +64,6 @@ fun HomeHeader(
                 style = AppTextStyles.headlineLarge,
                 color = Color(0xFF0A0A0A)
             )
-            Icon(
-                painter = painterResource(R.drawable.star_filled),
-                contentDescription = "즐겨찾기",
-                tint = AppColors.FavoriteIcon,
-                modifier = Modifier.clickable {
-                    onAction(HomeAction.OnFavoriteClick)
-                }
-            )
         }
         
         Spacer(modifier = Modifier.height(16.dp))

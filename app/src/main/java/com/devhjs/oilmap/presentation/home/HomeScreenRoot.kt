@@ -45,9 +45,6 @@ fun HomeScreenRoot(
                 is HomeEvent.NavigateToStationDetail -> {
                     onNavigateToDetail(event.stationId)
                 }
-                is HomeEvent.NavigateToFavorite -> {
-                   onNavigateToFavorite()
-                }
             }
         }
     }
