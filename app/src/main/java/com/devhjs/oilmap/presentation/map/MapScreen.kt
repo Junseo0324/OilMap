@@ -29,6 +29,7 @@ import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindowContent
 import com.google.maps.android.compose.MarkerState
 
@@ -105,43 +106,46 @@ fun MapScreen(
                 modifier = Modifier.weight(1f).fillMaxWidth()
             )
             {
+                GoogleMap(
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPositionState,
+                    properties = MapProperties(
+                        isMyLocationEnabled = true
+                    ),
+                    uiSettings = MapUiSettings(
+                        mapToolbarEnabled = false
+                    ),
+                    onMapLoaded = { onAction(MapAction.OnMapLoaded) }
+                ) {
+                    state.stations.forEach { uiModel ->
+                        val markerIcon = remember(uiModel.station.price, uiModel.isLowestPrice) {
+                            createPriceMarkerBitmap(
+                                price = uiModel.station.price,
+                                isLowestPrice = uiModel.isLowestPrice
+                            )
+                        }
+                        MarkerInfoWindowContent(
+                            state = MarkerState(position = uiModel.latLng),
+                            icon = markerIcon,
+                            title = uiModel.station.name,
+                            onInfoWindowClick = {
+                                onAction(MapAction.OnStationClick(uiModel.station.id))
+                            }
+                        ) {
+                            StationMarkerInfoWindow(
+                                uiModel = uiModel,
+                                onClick = { onAction(MapAction.OnStationClick(uiModel.station.id)) }
+                            )
+                        }
+                    }
+                }
+
                 if (state.isLoading) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(color = AppColors.AlteulMain)
-                    }
-                } else {
-                    GoogleMap(
-                        modifier = Modifier.fillMaxSize(),
-                        cameraPositionState = cameraPositionState,
-                        properties = MapProperties(
-                            isMyLocationEnabled = true
-                        ),
-                        onMapLoaded = { onAction(MapAction.OnMapLoaded) }
-                    ) {
-                        state.stations.forEach { uiModel ->
-                            val markerIcon = remember(uiModel.station.price, uiModel.isLowestPrice) {
-                                createPriceMarkerBitmap(
-                                    price = uiModel.station.price,
-                                    isLowestPrice = uiModel.isLowestPrice
-                                )
-                            }
-                            MarkerInfoWindowContent(
-                                state = MarkerState(position = uiModel.latLng),
-                                icon = markerIcon,
-                                title = uiModel.station.name,
-                                onInfoWindowClick = {
-                                    onAction(MapAction.OnStationClick(uiModel.station.id))
-                                }
-                            ) {
-                                StationMarkerInfoWindow(
-                                    uiModel = uiModel,
-                                    onClick = { onAction(MapAction.OnStationClick(uiModel.station.id)) }
-                                )
-                            }
-                        }
                     }
                 }
             }
