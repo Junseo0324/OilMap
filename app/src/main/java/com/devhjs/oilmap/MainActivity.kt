@@ -4,11 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
+import com.devhjs.oilmap.presentation.OilMapApp
 import com.devhjs.oilmap.presentation.designsystem.OilMapTheme
-import com.devhjs.oilmap.presentation.main.MainScreenRoot
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OilMapTheme {
-                MainScreenRoot(modifier = Modifier.fillMaxSize())
+                OilMapApp()
             }
         }
     }

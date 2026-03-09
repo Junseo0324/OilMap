@@ -40,10 +40,6 @@ class MapViewModel @Inject constructor(
                 _state.update { it.copy(selectedOilType = action.oilType) }
                 fetchStations(oilType = action.oilType)
             }
-            is MapAction.OnSortOptionSelected -> {
-                _state.update { it.copy(selectedSortType = action.sortType) }
-                fetchStations(sortType = action.sortType)
-            }
             is MapAction.OnStationClick -> {
                 viewModelScope.launch {
                     _event.emit(MapEvent.NavigateToStationDetail(action.stationId))
@@ -59,8 +55,7 @@ class MapViewModel @Inject constructor(
     }
 
     private fun fetchStations(
-        oilType: OilType = _state.value.selectedOilType,
-        sortType: SortType = _state.value.selectedSortType
+        oilType: OilType = _state.value.selectedOilType
     ) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
@@ -74,25 +69,24 @@ class MapViewModel @Inject constructor(
                     lat = location.latitude,
                     lng = location.longitude,
                     oilType = oilType,
-                    sortType = sortType
+                    sortType = SortType.DISTANCE
                 )
                 when (result) {
                     is Result.Success -> {
-                        val uiStations = result.data.mapIndexed { index, station ->
+                        val uiStations = result.data.map { station ->
                             val x = station.x ?: 0.0
                             val y = station.y ?: 0.0
                             val (lat, lng) = LocationUtil.katecToWgs84(x, y)
                             MapStationUiModel(
                                 station = station,
                                 latLng = LatLng(lat, lng),
-                                isLowestPrice = sortType == SortType.PRICE && index == 0
+                                isLowestPrice = false
                             )
                         }
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                stations = uiStations,
-                                totalCount = uiStations.size
+                                stations = uiStations
                             )
                         }
                     }
