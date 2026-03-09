@@ -51,6 +51,9 @@ class MapViewModel @Inject constructor(
             is MapAction.OnPermissionGranted -> {
                 fetchStations()
             }
+            is MapAction.OnMapLoaded -> {
+                _state.update { it.copy(isMapLoaded = true) }
+            }
         }
     }
 
@@ -73,6 +76,7 @@ class MapViewModel @Inject constructor(
                 )
                 when (result) {
                     is Result.Success -> {
+                        val lowestPrice = result.data.minOfOrNull { it.price } ?: 0
                         val uiStations = result.data.map { station ->
                             val x = station.x ?: 0.0
                             val y = station.y ?: 0.0
@@ -80,7 +84,7 @@ class MapViewModel @Inject constructor(
                             MapStationUiModel(
                                 station = station,
                                 latLng = LatLng(lat, lng),
-                                isLowestPrice = false
+                                isLowestPrice = station.price == lowestPrice
                             )
                         }
                         _state.update {

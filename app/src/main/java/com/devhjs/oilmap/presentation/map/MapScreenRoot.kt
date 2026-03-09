@@ -9,6 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreenRoot(
@@ -17,6 +21,22 @@ fun MapScreenRoot(
     onNavigateToDetail: (String) -> Unit = {}
 ) {
     val mapState by viewModel.state.collectAsStateWithLifecycle()
+
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(
+            mapState.currentLocation ?: LatLng(37.4979, 127.0276), 14f
+        )
+    }
+
+    LaunchedEffect(mapState.currentLocation, mapState.isMapLoaded) {
+        if (mapState.isMapLoaded) {
+            mapState.currentLocation?.let { location ->
+                cameraPositionState.animate(
+                    CameraUpdateFactory.newLatLngZoom(location, 14f)
+                )
+            }
+        }
+    }
 
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -50,6 +70,7 @@ fun MapScreenRoot(
 
     MapScreen(
         state = mapState,
+        cameraPositionState = cameraPositionState,
         onAction = viewModel::onAction,
         modifier = modifier
     )

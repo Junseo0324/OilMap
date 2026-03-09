@@ -14,11 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,42 +23,22 @@ import com.devhjs.oilmap.R
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.presentation.component.FuelTypeButton
 import com.devhjs.oilmap.presentation.component.StationMarkerInfoWindow
+import com.devhjs.oilmap.presentation.component.createPriceMarkerBitmap
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MarkerInfoWindowContent
 import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreen(
     state: MapState,
+    cameraPositionState: CameraPositionState,
     onAction: (MapAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val defaultLocation = LatLng(37.4979, 127.0276)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(
-            state.currentLocation ?: defaultLocation, 14f
-        )
-    }
-
-    var isMapLoaded by remember { mutableStateOf(false) }
-
-    // 현재 위치 변경 시 카메라 이동 (지도가 완전히 로드된 후에만 수행)
-    LaunchedEffect(state.currentLocation, isMapLoaded) {
-        if (isMapLoaded) {
-            state.currentLocation?.let { location ->
-                cameraPositionState.animate(
-                    CameraUpdateFactory.newLatLngZoom(location, 14f)
-                )
-            }
-        }
-    }
 
     Box(
         modifier = modifier
@@ -70,7 +46,7 @@ fun MapScreen(
             .background(AppColors.Background)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            // ===== 헤더: 앱 타이틀 + 즐겨찾기 아이콘 =====
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -143,11 +119,18 @@ fun MapScreen(
                         properties = MapProperties(
                             isMyLocationEnabled = true
                         ),
-                        onMapLoaded = { isMapLoaded = true }
+                        onMapLoaded = { onAction(MapAction.OnMapLoaded) }
                     ) {
                         state.stations.forEach { uiModel ->
+                            val markerIcon = remember(uiModel.station.price, uiModel.isLowestPrice) {
+                                createPriceMarkerBitmap(
+                                    price = uiModel.station.price,
+                                    isLowestPrice = uiModel.isLowestPrice
+                                )
+                            }
                             MarkerInfoWindowContent(
                                 state = MarkerState(position = uiModel.latLng),
+                                icon = markerIcon,
                                 title = uiModel.station.name,
                                 onInfoWindowClick = {
                                     onAction(MapAction.OnStationClick(uiModel.station.id))
