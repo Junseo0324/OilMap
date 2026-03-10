@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.devhjs.oilmap.core.navigation.BottomNavItem
 import com.devhjs.oilmap.core.navigation.MainBottomNavigationBar
+import com.devhjs.oilmap.presentation.component.ad.BannerAdView
+import androidx.compose.foundation.layout.Column
 
 @Composable
 fun MainScreen(
@@ -18,10 +20,13 @@ fun MainScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
-            MainBottomNavigationBar(
-                selectedRoute = selectedRoute,
-                onNavigate = onBottomNavSelected
-            )
+            Column {
+                BannerAdView()
+                MainBottomNavigationBar(
+                    selectedRoute = selectedRoute,
+                    onNavigate = onBottomNavSelected
+                )
+            }
         }
     ) { innerPadding ->
         content(innerPadding)

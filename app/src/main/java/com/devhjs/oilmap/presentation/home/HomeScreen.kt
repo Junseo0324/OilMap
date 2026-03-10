@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.component.GasStationCard
 import com.devhjs.oilmap.presentation.component.HomeHeader
+import com.devhjs.oilmap.presentation.component.ad.NativeAdCard
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 
 @Composable
@@ -49,11 +50,15 @@ fun Homescreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(state.sortedStations, key = { it.id }) { station ->
+                itemsIndexed(state.sortedStations, key = { _, station -> station.id }) { index, station ->
                     GasStationCard(
                         station = station,
                         onClick = { onAction(HomeAction.OnStationClick(station.id)) }
                     )
+                    
+                    if ((index + 1) % 4 == 0) {
+                        NativeAdCard()
+                    }
                 }
             }
         }

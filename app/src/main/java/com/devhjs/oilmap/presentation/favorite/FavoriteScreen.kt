@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +34,7 @@ import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.presentation.component.FavoriteInfoBanner
 import com.devhjs.oilmap.presentation.component.FavoriteStationCard
 import com.devhjs.oilmap.presentation.component.FuelTypeButton
+import com.devhjs.oilmap.presentation.component.ad.NativeAdCard
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 
@@ -160,12 +161,16 @@ fun FavoriteScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(state.stations, key = { it.id }) { station ->
+                    itemsIndexed(state.stations, key = { _, station -> station.id }) { index, station ->
                         FavoriteStationCard(
                             station = station,
                             onClick = { onAction(FavoriteAction.OnStationClick(station.id)) },
                             onToggleFavorite = { onAction(FavoriteAction.OnToggleFavorite(station)) }
                         )
+
+                        if ((index + 1) % 4 == 0) {
+                            NativeAdCard()
+                        }
                     }
                     item {
                         Spacer(modifier = Modifier.height(4.dp))
