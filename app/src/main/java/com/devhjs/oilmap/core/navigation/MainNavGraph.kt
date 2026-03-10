@@ -35,6 +35,9 @@ fun MainNavGraph(
             MapScreenRoot(
                 onNavigateToDetail = { stationId ->
                     navController.navigate(Route.Detail(stationId))
+                },
+                onNavigateToSettings = {
+                    navController.navigate(Route.Settings)
                 }
             )
         }

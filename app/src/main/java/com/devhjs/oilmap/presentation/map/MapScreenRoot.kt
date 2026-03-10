@@ -18,7 +18,8 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun MapScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: MapViewModel = hiltViewModel(),
-    onNavigateToDetail: (String) -> Unit = {}
+    onNavigateToDetail: (String) -> Unit = {},
+    onNavigateToSettings: () -> Unit = {}
 ) {
     val mapState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -63,6 +64,9 @@ fun MapScreenRoot(
             when (event) {
                 is MapEvent.NavigateToStationDetail -> {
                     onNavigateToDetail(event.stationId)
+                }
+                is MapEvent.NavigateToSettings -> {
+                    onNavigateToSettings()
                 }
             }
         }

@@ -19,5 +19,6 @@ data class MapState(
     val selectedOilType: OilType = OilType.GASOLINE,
     val currentLocation: LatLng? = null,
     val selectedStationId: String? = null,
-    val isMapLoaded: Boolean = false
+    val isMapLoaded: Boolean = false,
+    val searchRadius: Int = 3000
 )

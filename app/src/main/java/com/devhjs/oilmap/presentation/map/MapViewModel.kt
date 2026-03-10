@@ -8,12 +8,14 @@ import com.devhjs.oilmap.domain.location.LocationTracker
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.SortType
 import com.devhjs.oilmap.domain.usecase.GetAroundStationsUseCase
+import com.devhjs.oilmap.domain.usecase.GetUserPreferenceUseCase
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val getAroundStationsUseCase: GetAroundStationsUseCase,
+    private val getUserPreferenceUseCase: GetUserPreferenceUseCase,
     private val locationTracker: LocationTracker
 ) : ViewModel() {
 
@@ -31,7 +34,16 @@ class MapViewModel @Inject constructor(
     val event = _event.asSharedFlow()
 
     init {
-        fetchStations()
+        viewModelScope.launch {
+            val prefs = getUserPreferenceUseCase().first()
+            _state.update {
+                it.copy(
+                    selectedOilType = prefs.favoriteOilType,
+                    searchRadius = prefs.searchRadius
+                )
+            }
+            fetchStations()
+        }
     }
 
     fun onAction(action: MapAction) {
@@ -54,11 +66,17 @@ class MapViewModel @Inject constructor(
             is MapAction.OnMapLoaded -> {
                 _state.update { it.copy(isMapLoaded = true) }
             }
+            is MapAction.OnSettingsClick -> {
+                viewModelScope.launch {
+                    _event.emit(MapEvent.NavigateToSettings)
+                }
+            }
         }
     }
 
     private fun fetchStations(
-        oilType: OilType = _state.value.selectedOilType
+        oilType: OilType = _state.value.selectedOilType,
+        searchRadius: Int = _state.value.searchRadius
     ) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
@@ -71,6 +89,7 @@ class MapViewModel @Inject constructor(
                 val result = getAroundStationsUseCase(
                     lat = location.latitude,
                     lng = location.longitude,
+                    radius = searchRadius,
                     oilType = oilType,
                     sortType = SortType.DISTANCE
                 )

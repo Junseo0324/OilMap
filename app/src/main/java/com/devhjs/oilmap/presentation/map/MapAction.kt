@@ -8,4 +8,5 @@ sealed interface MapAction {
     data object OnPermissionGranted : MapAction
     data class OnMarkerClick(val stationId: String) : MapAction
     data object OnMapLoaded : MapAction
+    data object OnSettingsClick : MapAction
 }
