@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,15 +33,31 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val prefs = getUserPreferenceUseCase().first()
-            _state.update {
-                it.copy(
-                    selectedOilType = prefs.favoriteOilType,
-                    selectedSortType = prefs.defaultSortType,
-                    searchRadius = prefs.searchRadius
-                )
+            getUserPreferenceUseCase().collect { prefs ->
+                val prevOilType = _state.value.selectedOilType
+                val prevSortType = _state.value.selectedSortType
+                val prevRadius = _state.value.searchRadius
+
+                val wasLoaded = _state.value.isPreferencesLoaded
+
+                _state.update {
+                    it.copy(
+                        selectedOilType = prefs.favoriteOilType,
+                        selectedSortType = prefs.defaultSortType,
+                        searchRadius = prefs.searchRadius,
+                        isPreferencesLoaded = true
+                    )
+                }
+
+                if (!wasLoaded) {
+                    fetchStations()
+                } else if (prevOilType != prefs.favoriteOilType ||
+                    prevSortType != prefs.defaultSortType ||
+                    prevRadius != prefs.searchRadius
+                ) {
+                    fetchStations()
+                }
             }
-            fetchStations()
         }
     }
 

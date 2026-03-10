@@ -35,14 +35,26 @@ class MapViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val prefs = getUserPreferenceUseCase().first()
-            _state.update {
-                it.copy(
-                    selectedOilType = prefs.favoriteOilType,
-                    searchRadius = prefs.searchRadius
-                )
+            getUserPreferenceUseCase().collect { prefs ->
+                val prevOilType = _state.value.selectedOilType
+                val prevRadius = _state.value.searchRadius
+
+                val wasLoaded = _state.value.isPreferencesLoaded
+
+                _state.update {
+                    it.copy(
+                        selectedOilType = prefs.favoriteOilType,
+                        searchRadius = prefs.searchRadius,
+                        isPreferencesLoaded = true
+                    )
+                }
+
+                if (!wasLoaded) {
+                    fetchStations()
+                } else if (prevOilType != prefs.favoriteOilType || prevRadius != prefs.searchRadius) {
+                    fetchStations()
+                }
             }
-            fetchStations()
         }
     }
 

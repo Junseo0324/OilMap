@@ -20,5 +20,6 @@ data class MapState(
     val currentLocation: LatLng? = null,
     val selectedStationId: String? = null,
     val isMapLoaded: Boolean = false,
+    val isPreferencesLoaded: Boolean = false,
     val searchRadius: Int = 3000
 )
