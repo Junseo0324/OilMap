@@ -24,6 +24,9 @@ fun MainNavGraph(
             HomeScreenRoot(
                 onNavigateToDetail = { stationId ->
                     navController.navigate(Route.Detail(stationId))
+                },
+                onNavigateToSettings = {
+                    navController.navigate(Route.Settings)
                 }
             )
         }
@@ -47,6 +50,12 @@ fun MainNavGraph(
         // Detail
         composable<Route.Detail> {
             DetailScreenRoot(
+                onBack = { navController.popBackStack() }
+            )
+        }
+        // Settings
+        composable<Route.Settings> {
+            com.devhjs.oilmap.presentation.settings.SettingsScreenRoot(
                 onBack = { navController.popBackStack() }
             )
         }

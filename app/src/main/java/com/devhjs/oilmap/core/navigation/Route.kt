@@ -18,4 +18,8 @@ sealed interface Route {
     // 4. 주유소 상세 화면 (주유소 고유 ID 파라미터 포함)
     @Serializable
     data class Detail(val stationId: String) : Route
+
+    // 5. 설정 화면
+    @Serializable
+    data object Settings : Route
 }
