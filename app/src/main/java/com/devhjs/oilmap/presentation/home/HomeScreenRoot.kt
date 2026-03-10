@@ -15,7 +15,7 @@ fun HomeScreenRoot(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToDetail: (String) -> Unit = {},
-    onNavigateToFavorite: () -> Unit = {}
+    onNavigateToSettings: () -> Unit = {}
 ) {
     val homeState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -44,6 +44,9 @@ fun HomeScreenRoot(
             when (event) {
                 is HomeEvent.NavigateToStationDetail -> {
                     onNavigateToDetail(event.stationId)
+                }
+                is HomeEvent.NavigateToSettings -> {
+                    onNavigateToSettings()
                 }
             }
         }

@@ -12,5 +12,6 @@ data class HomeState(
     val totalCount: Int = 0,
     val isLoading: Boolean = false,
     val selectedOilType: OilType = OilType.GASOLINE,
-    val selectedSortType: SortType = SortType.DISTANCE
+    val selectedSortType: SortType = SortType.DISTANCE,
+    val searchRadius: Int = 3000
 )

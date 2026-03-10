@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,6 +62,14 @@ fun HomeHeader(
             Text(
                 text = "주유 어디",
                 style = AppTextStyles.headlineLarge.copy(color =Color(0xFF0A0A0A)),
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.setting),
+                contentDescription = "Settings",
+                tint = AppColors.Gray600,
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { onAction(HomeAction.OnSettingsClick) }
             )
         }
         

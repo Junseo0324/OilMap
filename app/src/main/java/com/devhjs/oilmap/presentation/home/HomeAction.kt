@@ -8,4 +8,5 @@ sealed interface HomeAction {
     data class OnResourceTypeSelected(val oilType: OilType) : HomeAction
     data class OnSortOptionSelected(val sortType: SortType) : HomeAction
     data object OnPermissionGranted : HomeAction
+    data object OnSettingsClick : HomeAction
 }
