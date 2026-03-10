@@ -115,4 +115,7 @@ dependencies {
 
     // Google Maps
     implementation(libs.maps.compose)
+
+    // AdMob
+    implementation(libs.play.services.ads)
 }
