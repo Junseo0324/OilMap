@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,6 +22,7 @@ import com.devhjs.oilmap.presentation.component.GasStationCard
 import com.devhjs.oilmap.presentation.component.HomeHeader
 import com.devhjs.oilmap.presentation.component.ad.NativeAdCard
 import com.devhjs.oilmap.presentation.designsystem.AppColors
+import com.devhjs.oilmap.presentation.designsystem.AppTextStyles
 
 @Composable
 fun Homescreen(
@@ -44,20 +47,34 @@ fun Homescreen(
                 onAction = onAction
             )
             
-            LazyColumn(
-                state = listState,
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                itemsIndexed(state.sortedStations, key = { _, station -> station.id }) { index, station ->
-                    GasStationCard(
-                        station = station,
-                        onClick = { onAction(HomeAction.OnStationClick(station.id)) }
+            if (state.sortedStations.isEmpty() && !state.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "주변 반경에 주유소가 없습니다.",
+                        style = AppTextStyles.noDataText
                     )
-                    
-                    if ((index + 1) % 4 == 0) {
-                        NativeAdCard()
+                }
+            } else {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier.fillMaxWidth().weight(1f),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    itemsIndexed(state.sortedStations, key = { _, station -> station.id }) { index, station ->
+                        GasStationCard(
+                            station = station,
+                            onClick = { onAction(HomeAction.OnStationClick(station.id)) }
+                        )
+
+                        if ((index + 1) % 4 == 0) {
+                            NativeAdCard()
+                        }
                     }
                 }
             }
