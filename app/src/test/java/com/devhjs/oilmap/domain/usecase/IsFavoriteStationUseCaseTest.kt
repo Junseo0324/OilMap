@@ -22,7 +22,7 @@ class IsFavoriteStationUseCaseTest {
     }
 
     @Test
-    fun `즐겨찾기 여부를 확인하여 반환한다`() = runTest {
+    fun `즐겨찾기_여부를_확인하여_반환한다`() = runTest {
         // Given
         coEvery { repository.isFavorite("1") } returns true
 
@@ -37,7 +37,7 @@ class IsFavoriteStationUseCaseTest {
     }
 
     @Test
-    fun `오류 발생 시 Result Error를 반환한다`() = runTest {
+    fun `오류_발생_시_Result_Error를_반환한다`() = runTest {
         // Given
         coEvery { repository.isFavorite(any()) } throws Exception("DB error")
 

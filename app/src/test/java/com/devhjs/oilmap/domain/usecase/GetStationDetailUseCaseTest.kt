@@ -23,7 +23,7 @@ class GetStationDetailUseCaseTest {
     }
 
     @Test
-    fun `주유소 상세 정보를 가져온다`() = runTest {
+    fun `주유소_상세_정보를_가져온다`() = runTest {
         // Given
         val stationId = "1"
         val stationDetail = StationDetail(

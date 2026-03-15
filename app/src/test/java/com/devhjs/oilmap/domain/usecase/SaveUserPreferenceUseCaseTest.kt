@@ -23,7 +23,7 @@ class SaveUserPreferenceUseCaseTest {
     }
 
     @Test
-    fun `유종 설정을 저장한다`() = runTest {
+    fun `유종_설정을_저장한다`() = runTest {
         // Given
         val oilType = OilType.PREMIUM_GASOLINE
         coEvery { repository.updateFavoriteOilType(oilType) } just runs
@@ -36,7 +36,7 @@ class SaveUserPreferenceUseCaseTest {
     }
 
     @Test
-    fun `정렬 기준을 저장한다`() = runTest {
+    fun `정렬_기준을_저장한다`() = runTest {
         // Given
         val sortType = SortType.PRICE
         coEvery { repository.updateDefaultSortType(sortType) } just runs
@@ -49,7 +49,7 @@ class SaveUserPreferenceUseCaseTest {
     }
 
     @Test
-    fun `검색 반경을 저장한다`() = runTest {
+    fun `검색_반경을_저장한다`() = runTest {
         // Given
         val radius = 5000
         coEvery { repository.updateSearchRadius(radius) } just runs

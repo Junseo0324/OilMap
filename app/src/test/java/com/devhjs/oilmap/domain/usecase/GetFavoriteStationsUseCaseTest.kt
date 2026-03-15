@@ -24,7 +24,7 @@ class GetFavoriteStationsUseCaseTest {
     }
 
     @Test
-    fun `즐겨찾기한 주유소 목록 Flow를 반환한다`() = runTest {
+    fun `즐겨찾기한_주유소_목록_Flow를_반환한다`() = runTest {
         // Given
         val oilType = OilType.GASOLINE
         val stations = listOf(

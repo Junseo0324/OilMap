@@ -25,7 +25,7 @@ class GetUserPreferenceUseCaseTest {
     }
 
     @Test
-    fun `사용자 설정 Flow를 반환한다`() = runTest {
+    fun `사용자_설정_Flow를_반환한다`() = runTest {
         // Given
         val preferences = UserPreferences(
             favoriteOilType = OilType.GASOLINE,

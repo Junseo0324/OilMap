@@ -4,7 +4,9 @@ import com.devhjs.oilmap.core.util.Result
 import com.devhjs.oilmap.domain.model.OilType
 import com.devhjs.oilmap.domain.model.Station
 import com.devhjs.oilmap.domain.repository.StationRepository
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,7 +24,7 @@ class GetLowPriceStationsUseCaseTest {
     }
 
     @Test
-    fun `최저가 주유소 목록을 가져온다`() = runTest {
+    fun `최저가_주유소_목록을_가져온다`() = runTest {
         // Given
         val oilType = OilType.GASOLINE
         val stations = listOf(
@@ -44,7 +46,7 @@ class GetLowPriceStationsUseCaseTest {
     }
 
     @Test
-    fun `오류 발생 시 Result Error를 반환한다`() = runTest {
+    fun `오류_발생_시_Result_Error를_반환한다`() = runTest {
         // Given
         coEvery { repository.getLowPriceStations(any(), any()) } throws Exception("Network error")
 

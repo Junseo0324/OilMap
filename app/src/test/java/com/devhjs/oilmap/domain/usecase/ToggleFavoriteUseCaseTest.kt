@@ -22,7 +22,7 @@ class ToggleFavoriteUseCaseTest {
     }
 
     @Test
-    fun `즐겨찾기 상태를 토글한다`() = runTest {
+    fun `즐겨찾기_상태를_토글한다`() = runTest {
         // Given
         val station = Station(id = "1", name = "A주유소", brandCode = "S001", price = 1500)
         coEvery { repository.toggleFavorite(station) } just runs

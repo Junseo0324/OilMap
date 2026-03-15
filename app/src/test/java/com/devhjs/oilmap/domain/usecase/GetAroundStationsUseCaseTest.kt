@@ -36,7 +36,7 @@ class GetAroundStationsUseCaseTest {
     }
 
     @Test
-    fun `주변 주유소 목록을 가져오고 거리순으로 정렬한다`() = runTest {
+    fun `주변_주유소_목록을_가져오고_거리순으로_정렬한다`() = runTest {
         // Given
         val lat = 37.0
         val lng = 127.0
@@ -70,7 +70,7 @@ class GetAroundStationsUseCaseTest {
     }
 
     @Test
-    fun `주변 주유소 목록을 가격순으로 정렬한다`() = runTest {
+    fun `주변_주유소_목록을_가격순으로_정렬한다`() = runTest {
         // Given
         val lat = 37.0
         val lng = 127.0
@@ -104,7 +104,7 @@ class GetAroundStationsUseCaseTest {
     }
 
     @Test
-    fun `가격이 0인 주유소는 목록에서 제외한다`() = runTest {
+    fun `가격이_0인_주유소는_목록에서_제외한다`() = runTest {
         // Given
         val lat = 37.0
         val lng = 127.0
