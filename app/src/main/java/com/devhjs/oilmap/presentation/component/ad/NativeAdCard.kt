@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.devhjs.oilmap.BuildConfig
 import com.devhjs.oilmap.R
 import com.devhjs.oilmap.presentation.designsystem.AppColors
 import com.google.android.gms.ads.AdLoader
@@ -29,7 +30,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 @Composable
 fun NativeAdCard(
     modifier: Modifier = Modifier,
-    adUnitId: String = "ca-app-pub-3940256099942544/2247696110"
+    adUnitId: String = BuildConfig.ADMOB_NATIVE_ID
 ) {
     val context = LocalContext.current
     var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
