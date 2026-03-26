@@ -1,21 +1,74 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Project Specific ProGuard Rules
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ---------------------------------------------------------
+# Android Default & Kotlin
+# ---------------------------------------------------------
+-keepattributes SourceFile,LineNumberTable
+-keepattributes *Annotation*
+-keepattributes EnclosingMethod
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# ---------------------------------------------------------
+# Hilt / Dagger
+# ---------------------------------------------------------
+-keep class dagger.hilt.** { *; }
+-keep interface dagger.hilt.** { *; }
+-keep @dagger.hilt.android.HiltAndroidApp class *
+-keep @dagger.hilt.EntryPoint class *
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# ---------------------------------------------------------
+# Retrofit & OkHttp
+# ---------------------------------------------------------
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keep class retrofit2.** { *; }
+-keep interface retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+
+# ---------------------------------------------------------
+# Kotlinx Serialization
+# ---------------------------------------------------------
+# @Serializable 클래스 보존 (Data Transfer Objects)
+-keep @kotlinx.serialization.Serializable class * { *; }
+-keepclassmembers class * {
+    @kotlinx.serialization.SerialName <fields>;
+}
+
+# ---------------------------------------------------------
+# Room
+# ---------------------------------------------------------
+-keep class * extends androidx.room.RoomDatabase
+-dontwarn androidx.room.paging.**
+
+# ---------------------------------------------------------
+# Google Play Services (Maps, Ads, Location)
+# ---------------------------------------------------------
+-keep class com.google.android.gms.** { *; }
+-keep interface com.google.android.gms.** { *; }
+
+# AdMob
+-keep class com.google.android.gms.ads.** { *; }
+-keep public class com.google.android.gms.ads.purchase.InAppPurchaseListener
+-keep public class com.google.android.gms.ads.measurement.DynamiteMeasurementEndpoints
+
+# Google Maps
+-keep class com.google.android.libraries.maps.** { *; }
+-keep interface com.google.android.libraries.maps.** { *; }
+
+# ---------------------------------------------------------
+# Proj4j (Coordinate Conversion)
+# ---------------------------------------------------------
+-keep class org.locationtech.proj4j.** { *; }
+
+# ---------------------------------------------------------
+# Optimization Settings
+# ---------------------------------------------------------
+-repackageclasses ''
+-allowaccessmodification
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
