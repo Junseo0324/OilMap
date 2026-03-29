@@ -30,7 +30,7 @@ fun MainNavGraph(
                 }
             )
         }
-        // Home - Map
+        // Map
         composable<Route.Map> {
             MapScreenRoot(
                 onNavigateToDetail = { stationId ->

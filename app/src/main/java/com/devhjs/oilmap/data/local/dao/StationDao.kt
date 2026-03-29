@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.Flow
 interface StationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStations(stations: List<StationEntity>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStation(station: StationEntity)
 
     @Query("SELECT * FROM stations WHERE stationId = :stationId")

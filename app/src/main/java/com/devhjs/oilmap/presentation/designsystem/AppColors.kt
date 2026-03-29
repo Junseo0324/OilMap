@@ -20,8 +20,6 @@ object AppColors {
     val TagCarWashText = Color(0xFF1447E6)
     val TagMaintenanceBg = Color(0xCCFFF7ED) // 80% alpha FFF7ED
     val TagMaintenanceText = Color(0xFFCA3500)
-    val BadgeClosedBg = Color(0xFFFB2C36)
-    val BadgeBrandBgDefault = Color(0xFFFE9A00) // Default brand bg from Figma (ex: 알뜰주유소)
 
     // 즐겨찾기
     val FavoriteIcon = Color(0xFFFDC700)

@@ -23,9 +23,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
-        ignoreUnknownKeys = true // 모르는 필드 무시
-        coerceInputValues = true // null 값이나 타입 불일치 시 기본값 사용
-        isLenient = true // 따옴표 없는 문자열 등 관대한 파싱 허용
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        isLenient = true
     }
 
     @Provides

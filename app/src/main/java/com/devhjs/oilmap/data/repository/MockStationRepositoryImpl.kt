@@ -24,7 +24,7 @@ class MockStationRepositoryImpl @Inject constructor() : StationRepository {
                     Station(
                         id = "mock_station_$index",
                         name = "가짜 주유소 $index",
-                        brandCode = arrayOf("SKE", "GSC", "HDO", "RTE").random(), // 무작위 브랜드
+                        brandCode = arrayOf("SKE", "GSC", "HDO", "RTE").random(),
                         price = 1500 + (index * 10),
                         distance = null,
                         x = katecX + (index * 100),

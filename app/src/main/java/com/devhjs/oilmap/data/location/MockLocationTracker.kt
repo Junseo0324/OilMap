@@ -2,6 +2,9 @@ package com.devhjs.oilmap.data.location
 
 import android.location.Location
 import com.devhjs.oilmap.domain.location.LocationTracker
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MockLocationTracker @Inject constructor() : LocationTracker {
@@ -19,11 +22,11 @@ class MockLocationTracker @Inject constructor() : LocationTracker {
         return mockLocation
     }
 
-    override fun getLocationUpdates(intervalMillis: Long): kotlinx.coroutines.flow.Flow<Location?> {
-        return kotlinx.coroutines.flow.flow {
+    override fun getLocationUpdates(intervalMillis: Long): Flow<Location?> {
+        return flow {
             while (true) {
                 emit(getCurrentLocation())
-                kotlinx.coroutines.delay(intervalMillis)
+                delay(intervalMillis)
             }
         }
     }

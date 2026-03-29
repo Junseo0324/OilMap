@@ -1,6 +1,7 @@
 package com.devhjs.oilmap.presentation.component.ad
 
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -71,24 +72,24 @@ fun NativeAdCard(
                     (adView.headlineView as? TextView)?.text = ad.headline
                     
                     if (ad.body == null) {
-                        adView.bodyView?.visibility = android.view.View.INVISIBLE
+                        adView.bodyView?.visibility = View.INVISIBLE
                     } else {
-                        adView.bodyView?.visibility = android.view.View.VISIBLE
+                        adView.bodyView?.visibility = View.VISIBLE
                         (adView.bodyView as? TextView)?.text = ad.body
                     }
 
                     if (ad.callToAction == null) {
-                        adView.callToActionView?.visibility = android.view.View.INVISIBLE
+                        adView.callToActionView?.visibility = View.INVISIBLE
                     } else {
-                        adView.callToActionView?.visibility = android.view.View.VISIBLE
+                        adView.callToActionView?.visibility = View.VISIBLE
                         (adView.callToActionView as? Button)?.text = ad.callToAction
                     }
 
                     if (ad.icon == null) {
-                        adView.iconView?.visibility = android.view.View.GONE
+                        adView.iconView?.visibility = View.GONE
                     } else {
                         (adView.iconView as? ImageView)?.setImageDrawable(ad.icon?.drawable)
-                        adView.iconView?.visibility = android.view.View.VISIBLE
+                        adView.iconView?.visibility = View.VISIBLE
                     }
                     
                     adView.setNativeAd(ad)

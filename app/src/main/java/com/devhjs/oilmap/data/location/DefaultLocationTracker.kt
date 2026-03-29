@@ -1,12 +1,12 @@
 package com.devhjs.oilmap.data.location
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.annotation.SuppressLint
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.devhjs.oilmap.domain.location.LocationTracker
@@ -49,7 +49,6 @@ class DefaultLocationTracker @Inject constructor(
         return try {
             locationClient.lastLocation.await()
         } catch (e: SecurityException) {
-            // 권한이 없는데 호출하는 경우 방어 로직
             null
         }
     }
