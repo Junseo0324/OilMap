@@ -25,8 +25,7 @@
 
 | Home | Map | Detail | Favorite |
 |:---:|:---:|:---:|:---:|
-| <img src="" width="200"/> | <img src="" width="200"/> | <img width="200" alt="image" src="https://github.com/user-attachments/assets/4d9ad56c-e49e-46f1-affe-072ce6e84ce0" />
- | <img src="" width="200"/> |
+| <img width="200" alt="image" src="https://github.com/user-attachments/assets/0aaa2651-b9c4-4ca5-bf52-bc90066592e6" />| <img width="200" alt="image" src="https://github.com/user-attachments/assets/62b855eb-8852-4fdb-b833-67757d88ea18" />| <img width="200" alt="image" src="https://github.com/user-attachments/assets/4a77bf9d-f4ae-4908-9b6b-88b1c2e525e2" />| <img width="200" alt="image" src="https://github.com/user-attachments/assets/0a91756c-c7f1-4028-8881-be0b18a9d97c" /> |
 
 ---
 
