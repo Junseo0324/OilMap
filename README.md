@@ -1,4 +1,4 @@
-# ⛽ OilMap (오일맵)
+# 주유 어디 - 내 주변 최저가 주유소 찾기
 
 > **실시간 주유소 가격 비교 앱** — 내 주변 가장 저렴한 주유소를 한눈에 찾아보세요!
 
@@ -25,7 +25,8 @@
 
 | Home | Map | Detail | Favorite |
 |:---:|:---:|:---:|:---:|
-| <img src="" width="200"/> | <img src="" width="200"/> | <img src="" width="200"/> | <img src="" width="200"/> |
+| <img src="" width="200"/> | <img src="" width="200"/> | <img width="200" alt="image" src="https://github.com/user-attachments/assets/4d9ad56c-e49e-46f1-affe-072ce6e84ce0" />
+ | <img src="" width="200"/> |
 
 ---
 
