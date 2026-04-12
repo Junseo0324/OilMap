@@ -147,8 +147,3 @@ Repository를 MockK으로 모킹하여 **비즈니스 로직만 독립적으로 
 > **참고:** 오피넷 무료 API 일일 호출 제한은 **1,500건**이며, 좌표계는 KATEC 방식을 사용합니다.  
 > 앱 내에서 Proj4J를 통해 WGS84(GPS) ↔ KATEC 좌표 변환을 자동 처리합니다.
 
----
-
-## 📝 License
-
-This project is for personal/educational purposes.
